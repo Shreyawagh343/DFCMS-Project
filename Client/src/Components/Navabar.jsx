@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { auth } from "./Firebase";
+import Login from './Login'
 
 const Navabar = () => {
 
@@ -108,6 +109,10 @@ const Navabar = () => {
                     </li>
                     <li>
                       <a onClick={handlelogout}>Logout</a>
+                    </li>
+                    <li>
+                    <a onClick={()=>document.getElementById("my_modal_3").showModal()}>Login</a>
+                    <Login/>
                     </li>
                   </ul>
                 </details>

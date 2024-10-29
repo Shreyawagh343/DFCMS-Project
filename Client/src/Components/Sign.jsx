@@ -33,7 +33,7 @@ const Sign = () => {
         <div className="dark:bg-slate-900 dark:text-white ">
               <div className=' md:mt-10 mt-0 md:pt-5 pt-10 md:ml-[32rem] ml-[1rem] h-[45rem] md:w-[30rem] w-11/12 flex flex-col md:border border-0 p-5'>
                 <h1 className='text-3xl pl-7 relative'>Create account</h1>
-                <Link to="/" className="btn btn-sm btn-circle btn-ghost left-[59rem] absolute">✕</Link>
+                <Link to="/home" className="btn btn-sm btn-circle btn-ghost left-[59rem] absolute">✕</Link>
                 <p className='pl-7'>Get started with an account.</p>
                 <form className='flex flex-col pl-7 mt-10' onSubmit={handleSubmit(onSubmit)}>
                     <label htmlFor="" className='text-gray-500'>Name</label>

@@ -40,7 +40,7 @@ const Login = () => {
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box md:w-full w-9/12 -ml-5 dark:bg-slate-900 dark:text-white" >
             <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
-              <Link to="/" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              <Link to="/home" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
               onClick={()=>document.getElementById("my_modal_3").close()}>✕</Link>
               <h3 className="font-bold text-center md:text-3xl text-2xl">Login</h3>
 
