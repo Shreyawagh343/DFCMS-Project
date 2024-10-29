@@ -1,11 +1,10 @@
 import User from "../Module/Usermoduler.js";
-
 import bcrypt from "bcryptjs";
 
 export const Singup = async (req, res) => {
     try {
-        let { fullname, email, password } = req.body;
-        let user = await User.findOne({ email });
+        let { fullname, email, password , officerCode} = req.body;
+        let user = await User.findOne({ officerCode });
         if (user) return res.status(400).json({ message: "user already exists" })
 
         bcrypt.genSalt(10, function (err, salt) {
@@ -13,7 +12,8 @@ export const Singup = async (req, res) => {
                 const createuser = await User.create({
                     fullname,
                     email,
-                    password: hash
+                    password: hash,
+                    officerCode,
                 })
 
                 await createuser.save()
@@ -33,8 +33,8 @@ export const Singup = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        let { email, password } = req.body;
-        const user = await User.findOne({email})
+        let { officerCode , password } = req.body;
+        const user = await User.findOne({officerCode })
          const isMatch = await bcrypt.compare(password,
             user.password);
         if(!user || !isMatch){
@@ -46,7 +46,8 @@ export const login = async (req, res) => {
                 user: {
                     _id: user.id,
                     fullname: user.fullname,
-                    email: user.email
+                    email: user.email,
+                    officerCode:user.officerCode,
                 }
             })
         }
@@ -56,3 +57,4 @@ export const login = async (req, res) => {
         res.status(500).json({ message: " Internal server error" })
     }
 }
+

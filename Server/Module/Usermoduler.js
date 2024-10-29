@@ -13,7 +13,12 @@ const UserSchema = mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
+    },
+    officerCode: {
+        type: String,
+        unique: true,  
+        required: true
+      },
 })
 
 const User = mongoose.model("user",UserSchema)

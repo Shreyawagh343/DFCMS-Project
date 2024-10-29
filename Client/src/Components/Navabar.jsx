@@ -95,7 +95,7 @@ const Navabar = () => {
             <>
           <div className="avatar mt-3 md:mt-2 -ml-5 md:ml-[45rem]">
             <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-              <img src={userDetails.photo} />
+              <img src="https://img.freepik.com/premium-vector/manager-icon_933463-4265.jpg?w=740" />
             </div>
           </div>
           <div class="flex-none">
@@ -105,14 +105,11 @@ const Navabar = () => {
                   <summary>{userDetails.displayName}</summary>
                   <ul class="bg-base-100 rounded-t-none p-5">
                     <li>
-                      <a className="w-44">Profile Update</a>
-                    </li>
-                    <li>
-                      <a onClick={handlelogout}>Logout</a>
-                    </li>
-                    <li>
                     <a onClick={()=>document.getElementById("my_modal_3").showModal()}>Login</a>
                     <Login/>
+                    </li>
+                    <li>
+                      <a onClick={handlelogout} className="w-44 -mt-3">Logout</a>
                     </li>
                   </ul>
                 </details>

@@ -12,6 +12,8 @@ const Sign = () => {
             fullname:data.fullname,
             email:data.email,
             password:data.password,
+            officerCode:data.officerCode,
+
         }
         axios.post("http://localhost:4001/users/SignIn",userinfo) 
         .then((res)=>{
@@ -55,6 +57,11 @@ const Sign = () => {
                         htmlFor="label">Comfirm password</label>
                     <input type="password" name='password'
                     className='border border-gray-300 h-10 mt-3 w-11/12 pl-5 rounded-md' />
+
+<label htmlFor="label" className='text-gray-500 mt-5'>
+    Officer Code</label>
+                    <input type="number" name='number' className='border border-gray-300 h-10 mt-3 w-11/12 pl-5 rounded-md'  {...register("officerCode", { required:{value:true,message:"This field is required"}})}/>
+                    {errors.officerCode && <span className='text-red-600 text-xs pt-3'>{errors.email.officerCode}</span>}
 
                     <div className=" flex flex-row">
                         <input type="checkbox"  className='border border-gray-300 h-3 mt-5 w-11/12 pl-1 -ml-32 rounded-md'/>
