@@ -1,15 +1,19 @@
 import express from "express"
 const router = express.Router();
-import Case from "../Module/CaseModule.js";
+import { createCase } from "../Controller/Case.js";
+import { getAllCases } from "../Controller/Case.js";
+import { updateCase } from "../Controller/Case.js";
+import { deleteCase } from "../Controller/Case.js";
+import { getCaseById } from "../Controller/Case.js";
+import { getLatestUpdate } from "../Controller/Case.js";
+import {authenticateUser} from "../Middleware/auth.js"
 
-router.get('/cases/:officerId', async (req, res) => {
-    try {
-      const officerId = req.params.officerId;
-      const cases = await Case.find({ assignedOfficer: officerId });
-      res.json(cases);
-    } catch (error) {
-      res.status(500).json({ message: 'Error fetching cases' });
-    }
-  });
+
+router.post('/createCase', authenticateUser,createCase);
+router.get('/AllCase', getAllCases);
+router.get('/FindCase/:id',getCaseById);
+router.put('/idUpdate/:id', updateCase);
+router.delete('/idDelete/:id', deleteCase);
+router.get('/latest-update/:id',getLatestUpdate);
 
   export default router;

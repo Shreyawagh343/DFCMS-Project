@@ -1,5 +1,6 @@
 import User from "../Module/Usermoduler.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken"
 
 export const Singup = async (req, res) => {
     try {
@@ -35,6 +36,8 @@ export const login = async (req, res) => {
     try {
         let { officerCode , password } = req.body;
         const user = await User.findOne({officerCode })
+        const token = jwt.sign({ id: user._id }, process.env.YOUR_SECRET_KEY, { expiresIn: '1h' });
+        res.cookie('token', token,)
          const isMatch = await bcrypt.compare(password,
             user.password);
         if(!user || !isMatch){

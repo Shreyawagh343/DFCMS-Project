@@ -1,12 +1,87 @@
 import mongoose from "mongoose";
-
 const caseSchema = new mongoose.Schema({
-    title: String,
-    description: String,
-    status: String,
-    assignedOfficer: { type: mongoose.Schema.Types.ObjectId, ref: 'Officer' },
-    // Other case-specific fields
-  });
+title: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  description: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  evidenceType: {
+    type: String,
+    enum: ['hard drive', 'smartphone', 'computer', 'cloud data', 'network logs', 'other'],
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ['new', 'in_progress', 'completed', 'archived'],
+    required: true,
+    default: 'new',
+  },
+  priority: {
+    type: String,
+    enum: ['low', 'medium', 'high'],
+    default: 'medium',
+  },
+  chainOfCustody: [
+    {
+      receivedBy: {
+        type: String,
+        required: true,
+      },
+      dateReceived: {
+        type: Date,
+        required: true,
+        default: Date.now,
+      },
+      location: {
+        type: String,
+        required: true,
+      },
+      notes: String,
+    },
+  ],
+  toolsUsed: [
+    {
+      name: String,
+      version: String,
+      notes: String,
+    },
+  ],
+  findings: [
+    {
+      summary: String,
+      details: String,
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+      addedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required: true,
+      },
+    },
+  ],
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref:"User",
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+
 
 const Case = mongoose.model("Case",caseSchema);
 
