@@ -65,21 +65,27 @@ export const getAllCases = async (req, res) => {
             res.status(500).json({ error: 'Error fetching the forensic case', details: error.message });
         }
     };
-      export const updateCase = async (req, res) => {
-        const { title } = req.body;
-        console.log(title)
-      
-        try {
-
-            const updatedCase = await Case.findOneAndUpdate(title, updates, { new: true });
-            if (!updatedCase) {
+    export const updateCase = async (req, res) => {
+      const { id } = req.params; // Get the case ID from the request parameters
+      const updates = req.body; // Get the updates from the request body
+  
+      console.log("Updating case with ID:", id); // Log the ID being updated
+      console.log("Updates:", updates); // Log the updates being applied
+  
+      try {
+          // Find the case by ID and update it with the provided updates
+          const updatedCase = await Case.findByIdAndUpdate(id, updates, { new: true });
+          console.log(updateCase)
+          if (!updatedCase) {
               return res.status(404).json({ message: 'Forensic case not found' });
-            }
+          }
+  
+          // Return the updated case
           res.status(200).json(updatedCase);
-        } catch (error) {
+      } catch (error) {
           res.status(500).json({ error: 'Error updating the forensic case', details: error.message });
-        }
-      };
+      }
+  };
       export const deleteCase = async (req, res) => {
         const { title } = req.body;
         console.log(title)

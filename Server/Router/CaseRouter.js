@@ -15,5 +15,5 @@ router.get('/FindCase/:id',getCaseById);
 router.put('/idUpdate/:id', updateCase);
 router.delete('/idDelete/:id', deleteCase);
 router.get('/latest-update/:id',getLatestUpdate);
-
-  export default router;
+ 
+export default router;
