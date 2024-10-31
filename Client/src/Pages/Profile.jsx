@@ -1,5 +1,3 @@
-
-import Dashboard from '@/Components/DashboardOffA'
 import Navabar from '@/Components/Navabar'
 import React from 'react'
 
@@ -7,6 +5,7 @@ const Profile = () => {
   return (
     <>
     <Navabar/>
+
 
     </>
   )
