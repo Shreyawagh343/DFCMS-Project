@@ -21,7 +21,7 @@ const SidebarComp = () => {
   <input id="my-drawer" type="checkbox" className="drawer-toggle" />
   <div className="drawer-content">
     {/* Page content here */}
-    <label htmlFor="my-drawer" className="btn btn-primary drawer-button">Manage Cases</label>
+    <label htmlFor="my-drawer" className="btn btn-primary drawer-button fixed -z-50">Manage Cases</label>
   </div>
   <div className="drawer-side">
     <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
@@ -40,7 +40,7 @@ const SidebarComp = () => {
               <p>Loading...</p>
           )}</a></li>
       <li><a className="-mt-[2rem] ml-5 text-[1.2rem]">Dashboard</a></li>
-      <li><a className=" ml-5  text-[1.2rem]">Manage Case</a></li>
+      <li><a href='/dashboard/ManageCase' className=" ml-5  text-[1.2rem]">Manage Case</a></li>
       <li><a className=" ml-5  text-[1.2rem]">Add Case</a></li>
       <li><a className=" ml-5  text-[1.2rem]">SiginIn</a></li>
       <li><a className=" ml-5  text-[1.2rem]">Logout</a></li>

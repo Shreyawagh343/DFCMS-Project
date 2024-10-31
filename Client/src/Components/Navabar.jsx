@@ -103,13 +103,13 @@ const Navabar = () => {
               <li>
                 <details>
                   <summary>{userDetails.displayName}</summary>
-                  <ul class="bg-base-100 rounded-t-none p-5">
+                  <ul class="bg-base-100 rounded-t-none p-5 fixed z-50 dark:bg-slate-900 dark:text-white ">
                     <li>
                     <a onClick={()=>document.getElementById("my_modal_3").showModal()}>Login</a>
                     <Login/>
                     </li>
                     <li>
-                      <a onClick={handlelogout} className="w-44 -mt-3">Logout</a>
+                      <a onClick={handlelogout} className="w-44 -mt-3">Logout</a> 
                     </li>
                   </ul>
                 </details>

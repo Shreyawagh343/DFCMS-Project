@@ -7,6 +7,8 @@ import Login from './Components/Login';
 import DashbaordOffB from './Components/DashbaordOffB';
 import DashboardOffC from './Components/DashboardOffC';
 import DashboardA from './Pages/DashboardA';
+import ManageCasePage from './Pages/ManageCasePage';
+
 
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
       <Route path="/dashboard/Office12" element={<DashbaordOffB/>} />
       <Route path="/dashboard/Office13" element={<DashboardA/>} />
       <Route path="/dashboard/Office14" element={<DashboardOffC/>} />
+      <Route path="/dashboard/ManageCase" element={<ManageCasePage/>} />
     </Routes>
     <Toaster />
     </div>
