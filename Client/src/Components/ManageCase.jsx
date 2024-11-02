@@ -53,7 +53,7 @@ const ManageCase = () => {
   
     return (
       <>
-        <div className="mt-32">
+        <div className="mt-32 dark:bg-slate-900 dark:text-white">
           <h1 className='text-3xl font-bold ml-28'>Welcome Back!</h1>
           <p className='text-1xl text-gray-500 ml-28'>Here's a list of your tasks for this month!</p>
           <div className="flex">

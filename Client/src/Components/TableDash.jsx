@@ -1,40 +1,69 @@
-import React from 'react'
+import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table"
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const TableDash = () => {
+  const [Caseinformation, setCaseinformation] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4001/cases/AllCase")
+      .then((response) => {
+        setCaseinformation(response.data || []);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching payments:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
   return (
     <>
-    <div className="ml-20">
-    <Table>
-  <TableCaption>A list of your recent invoices.</TableCaption>
-  <TableHeader>
-    <TableRow>
-      <TableHead className="w-[100px]">Title</TableHead>
-      <TableHead>Status</TableHead>
-      <TableHead>Created By</TableHead>
-      <TableHead className="text-right">Priority</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    <TableRow>
-      <TableCell className="font-medium">INV001</TableCell>
-      <TableCell>Paid</TableCell>
-      <TableCell>Credit Card</TableCell>
-      <TableCell className="text-right">$250.00</TableCell>
-    </TableRow>
-  </TableBody>
-</Table>
-</div>
+      <Card>
+        <CardHeader>
+          <CardTitle> Recent Case</CardTitle>
+          <CardDescription>Track your recent cases</CardDescription>
+        </CardHeader>
+        <CardContent>
+        <table className="table text-[1.1rem]">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Caseinformation.slice(0, 4).map((cases) => (
+              <tr key={cases.createdBy}>
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <div className="font-bold">{cases.title}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>{cases.status}</td>
+                <td>{cases.priority}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </CardContent>
+      </Card>
     </>
-  )
-}
+  );
+};
 
-export default TableDash
+export default TableDash;

@@ -1,9 +1,9 @@
-import DashboardOffA from "@/Components/DashboardOffA";
+import DashbaordOffB from "@/Components/DashbaordOffB";
 import Navabar from "@/Components/Navabar";
 import SidebarComp from "@/Components/SidebarComp";
 import React from "react";
 
-const DashboardA = () => {
+const DashboardB = () => {
   return (
     <>
      <div className="w-[100vw] h-[120vh]">
@@ -20,10 +20,10 @@ const DashboardA = () => {
           <SidebarComp />
         </div>
       </div>
-      <DashboardOffA />
+      <DashbaordOffB/>
       </div>
     </>
   );
 };
 
-export default DashboardA;
+export default DashboardB;

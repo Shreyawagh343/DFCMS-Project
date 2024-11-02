@@ -4,11 +4,9 @@ import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import {ChartContainer } from "@/components/ui/chart"
 import { ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 import { Monitor } from "lucide-react"
-import DashIcon from "../../src/assets/Dashicon.png"
 import PieChat from './PieChat'
 import DashboardCard from './DashboardCard'
 import TableDash from './TableDash'
-import SidebarComp from './SidebarComp'
 
 const DashboardOffA = () => {
   const chartData = [
@@ -41,6 +39,7 @@ const DashboardOffA = () => {
     };
   return (
     <>
+    <div className="mb-32">
     <div className="flex">
    <div className="">
     <div className="flex ml-32">
@@ -67,13 +66,14 @@ const DashboardOffA = () => {
       </BarChart>
     </ChartContainer>
     </div>
-    <div className="ml-[2rem] ">
+    <div className="ml-[0.5rem] ">
     <PieChat/>
   </div>
-    <div className="ml-[2rem] ">
+    <div className="ml-[2rem]">
     <TableDash/>
   </div>
   </div>
+    </div>
     </div>
     </div>
     </>
