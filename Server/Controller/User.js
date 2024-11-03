@@ -45,13 +45,14 @@ export const login = async (req, res) => {
         }
         else {
             return res.status(200).json({
-                message: "you can login",
+                message: 'Login successful',
+                token,  // Include the token in the response
                 user: {
-                    _id: user.id,
+                    _id: user._id,
                     fullname: user.fullname,
                     email: user.email,
-                    officerCode:user.officerCode,
-                }
+                    officerCode: user.officerCode,
+                },
             })
         }
         

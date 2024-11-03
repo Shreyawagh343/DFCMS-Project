@@ -64,7 +64,8 @@ const SidebarComp = () => {
               </a>
             </li>
             <li>
-              <a className="-mt-[2rem] ml-5 text-[1.2rem]">Dashboard</a>
+  
+              <a href="/dashboard/Office12" className="-mt-[2rem] ml-5 text-[1.2rem]">Dashboard</a>
             </li>
             <li>
               <a href="/dashboard/ManageCase" className=" ml-5  text-[1.2rem]">

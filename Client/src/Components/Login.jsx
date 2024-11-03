@@ -6,43 +6,42 @@ import toast from 'react-hot-toast';
 
 const Login = () => { 
   const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data =>{
-      const officerCode = data.officerCode; 
-      const password = data.password;
-      const userinfo = {
-        officerCode,
-        password,
-      };
-      axios.post("http://localhost:4001/users/LoginCode",
-        userinfo
-      ) 
-      .then((res)=>{
-        console.log(res.data)
-        if(res.data){
-          toast.success('Successfully Login!');
-          document.getElementById("my_modal_3").close();
-          setTimeout(() => {
-            localStorage.setItem("users",JSON.stringify(res.data.user))
-            window.location.reload()
-          }, 2000);
-        }
-          if (officerCode === '1234567890') {
-            window.location.href='/dashboard/Office12'
-          } else if (officerCode === '987654321') {
-            window.location.href='/dashboard/Office13'
-          } else if (officerCode === '654321789') {
-            window.location.href='/dashboard/Office14'
-          }else {
-            // Handle cases where officerCode doesn't match any known dashboard
-            setError('Invalid officer code');
-          }         
-        })
-      .catch((err)=>{
-          if(err.response){
-              console.log(err)
-              toast.error("Error: " + err.response.data.message);
+  const onSubmit = data => {
+    const { officerCode, password } = data; 
+    const userinfo = { officerCode, password };
+  
+    axios.post("http://localhost:4001/users/LoginCode", userinfo)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data) {
+          // Store token and user info
+          localStorage.setItem("token", res.data.token); // Save the token
+          localStorage.setItem("users", JSON.stringify(res.data.user)); // Save user info
+          toast.success('Successfully logged in!');
+  
+          // Redirect based on officer code
+          switch (officerCode) {
+            case '1234567890':
+              window.location.href = '/dashboard/Office12';
+              break;
+            case '987654321':
+              window.location.href = '/dashboard/Office13';
+              break;
+            case '654321789':
+              window.location.href = '/dashboard/Office14';
+              break;
+            default:
+              // Handle cases where officerCode doesn't match any known dashboard
+              toast.error('Invalid officer code');
           }
+        }
       })
+      .catch((err) => {
+        if (err.response) {
+          console.log(err);
+          toast.error("Error: " + err.response.data.message);
+        }
+      });
   };
 
 

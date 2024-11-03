@@ -77,31 +77,11 @@ const TableCase = () => {
                 <td>{cases.status}</td>
                 <td>{cases.priority}</td>
                 <th>
-                  {/* Details Dialog */}
-                  <AlertDialog>
-                    <AlertDialogTrigger>Open</AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Are you absolutely sure?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. This will permanently
-                          delete your account and remove your data from our
-                          servers.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction>Continue</AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </th>
-                <th>
                   {/* Edit Sheet */}
                   <Sheet>
-                    <SheetTrigger>Edit</SheetTrigger>
+                    <SheetTrigger>
+                    <button className="btn btn-link  btn-primary">Open</button>
+                    </SheetTrigger>
                     <SheetContent>
                       <SheetHeader>
                         <SheetTitle>Edit profile</SheetTitle>
@@ -132,7 +112,30 @@ const TableCase = () => {
                     </SheetContent>
                   </Sheet>
                 </th>
-    
+                <th>
+                  {/* Details Dialog */}
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                    <button className="btn btn-outline  btn-success">Edit</button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete your account and remove your data from our
+                          servers.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction>Continue</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </th>
               </tr>
           ))}
           </tbody>

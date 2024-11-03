@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const caseSchema = new mongoose.Schema({
-title: {
+  title: {
     type: String,
     required: true,
     trim: true,
@@ -9,7 +9,7 @@ title: {
     type: String,
     required: true,
     trim: true,
-  },
+  }, 
   evidenceType: {
     type: String,
     enum: ['hard drive', 'smartphone', 'computer', 'cloud data', 'network logs', 'other'],
@@ -17,9 +17,9 @@ title: {
   },
   status: {
     type: String,
-    enum: ['new', 'in_progress', 'completed', 'archived'],
+    enum: ['pending', 'in_progress', 'completed'],
     required: true,
-    default: 'new',
+    default: 'in_progress',
   },
   priority: {
     type: String,
@@ -42,6 +42,7 @@ title: {
         required: true,
       },
       notes: String,
+  
     },
   ],
   toolsUsed: [
@@ -65,7 +66,7 @@ title: {
         required: true,
       },
     },
-  ],
+  ],  
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref:"User",

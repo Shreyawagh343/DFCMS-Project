@@ -1,4 +1,7 @@
 import Case from "../Module/CaseModule.js";
+import uploadPDF from "../Middleware/Multer.js" // Import the multer middleware
+import fs from 'fs';
+import path from 'path';
 
 export const createCase = async (req, res) => {
     const {
@@ -9,8 +12,7 @@ export const createCase = async (req, res) => {
       priority,
       chainOfCustody,
       toolsUsed,
-      assignedInvestigators,
-      findings,
+      findings = [],
       createdBy,
     } = req.body;
     const userId = req.user._id;
@@ -23,7 +25,6 @@ export const createCase = async (req, res) => {
           priority,
           chainOfCustody,
           toolsUsed,
-          assignedInvestigators,
           findings:findings.map(finding => ({
             ...finding,
             addedBy: userId // Associate the finding with the user ID
@@ -38,10 +39,11 @@ export const createCase = async (req, res) => {
     };
 
 export const getAllCases = async (req, res) => {
+  const {id}=req.body;
+
     try {
      
-        const cases = await Case.findOne().populate('createdBy')        // Populate createdBy field
-        .populate('findings.addedBy');
+        const cases = await Case.find({id}).populate('createdBy').populate('findings.addedBy');       // Populate createdBy field
         console.log("All cases in database:", cases);
           res.status(200).json(cases);
           console.log(cases)
@@ -56,7 +58,7 @@ export const getAllCases = async (req, res) => {
   
 
         try {
-          const forensicCase = await Case.findOne({title : title})
+          const forensicCase = await Case.find(title)
           console.log("Case found with findOne:", forensicCase);
     
             res.status(200).json(forensicCase);
@@ -118,4 +120,28 @@ export const getAllCases = async (req, res) => {
         } catch (error) {
           res.status(500).json({ error: 'Error retrieving the latest update for the case', details: error.message });
         }
+      };
+
+      export const uploadPDFController = (req, res) => {
+        // Use the `uploadPDF` middleware to handle the PDF upload
+        uploadPDF(req, res, (err) => {
+          if (err) {
+            // Handle errors from multer (e.g., file type or size errors)
+            return res.status(400).json({ error: err.message });
+          }
+      
+          if (!req.file) {
+            return res.status(400).json({ error: 'Please upload a PDF file' });
+          }
+      
+          // File is successfully uploaded
+          res.status(200).json({
+            message: 'PDF uploaded successfully',
+            fileInfo: {
+              filename: req.file.filename,
+              path: req.file.path,
+              size: req.file.size,
+            },
+          });
+        });
       };

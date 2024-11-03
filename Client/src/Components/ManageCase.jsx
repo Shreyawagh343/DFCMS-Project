@@ -53,16 +53,16 @@ const ManageCase = () => {
   
     return (
       <>
-        <div className="mt-32 dark:bg-slate-900 dark:text-white">
+        <div className="mt-24 dark:bg-slate-900 dark:text-white">
           <h1 className='text-3xl font-bold ml-28'>Welcome Back!</h1>
           <p className='text-1xl text-gray-500 ml-28'>Here's a list of your tasks for this month!</p>
           <div className="flex">
-            <input type="text" placeholder="Search Case" className="input input-bordered w-72 ml-28 mt-6" />
+            <input type="text" placeholder="Search Case" className="input input-bordered w-[25rem] ml-28 mr-7 mt-6" />
             <div className="flex items-center space-x-4 ml-4">
               <p className="text-[1.2rem] text-muted-foreground mt-4">Status</p>
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" size="sm" className="w-[10rem] h-10 mt-5 justify-start">
+                  <Button variant="outline" size="sm" className="w-[15rem] h-10 mt-5 justify-start">
                     {selectedStatus ? (
                       <>
                         <selectedStatus.icon className="mr-2 h-4 w-4 shrink-0" />
@@ -103,7 +103,7 @@ const ManageCase = () => {
                 </PopoverContent>
               </Popover>
             </div>
-           <div className="ml-[40rem] -mt-14">
+           <div className="ml-[28rem] -mt-14">
             <SidebarComp />
             </div>    
           </div>

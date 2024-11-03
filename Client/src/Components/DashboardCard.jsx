@@ -1,5 +1,5 @@
 import React from "react";
-import TotalCaicon from "../../src/assets/TotalCaicon.png"
+
 
 const DashboardCard = () => {
   return (
