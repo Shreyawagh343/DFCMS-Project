@@ -25,18 +25,18 @@ const SidebarComp = () => {
   return (
     <>
     <div className="dark:bg-slate-900 dark:text-white">
-      <div className="drawer fixed z-50">
+      <div className="drawer relative z-40">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           {/* Page content here */}
           <label
             htmlFor="my-drawer"
-            className="btn btn-primary drawer-button fixed -z-50"
+            className="btn bg-[#00b4d8] dark:bg-[#001845] text-white drawer-button "
           >
             Manage Cases
           </label>
         </div>
-        <div className="drawer-side">
+        <div className="drawer-side mt-16">
           <label
             htmlFor="my-drawer"
             aria-label="close sidebar"

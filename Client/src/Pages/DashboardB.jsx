@@ -11,12 +11,12 @@ const DashboardB = () => {
       <div className="">.</div>
       <div className="flex">
         <div className="">
-          <h1 className="text-3xl ml-44 mt-16 font-bold">DashBoard</h1>
+          <h1 className="text-3xl ml-44 mt-24 font-bold">DashBoard</h1>
           <p className="text-1xl ml-44 mt-2 text-gray-500">
             Manage and track Your cases
           </p>
         </div>
-        <div className="ml-[54rem] mt-[5rem]">
+        <div className="ml-[57rem] mt-[6rem]">
           <SidebarComp />
         </div>
       </div>

@@ -65,14 +65,14 @@ const AddCase = () => {
 
   return (
     <>
-      <div className="mt-28 ml-28 text-[1.3rem] w-[85vw]">
+      <div className="mt-28 ml-28 text-[1.3rem] w-[85vw]  ">
         <Card>
           <CardHeader>
             <CardTitle>
-              <h1 className="text-3xl ml-8 font-bold ">Add Case</h1>
+              <h1 className="text-[2.3rem] ml-8 font-bold text-center ">Add Case</h1>
             </CardTitle>
             <CardDescription>
-              <p className="text-1xl ml-8 text-gray-500 "> 
+              <p className="text-[1.2rem] ml-8 text-center text-gray-500 "> 
                 Add new forensic cases and ensure all relevant details are
                 accurately captured
               </p>
@@ -80,16 +80,16 @@ const AddCase = () => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="flex flex-col">
+              <div className="flex flex-col placeholder-gray-800 ">
                 <label htmlFor="" className="text-gray-500 ml-6 mt-5">
                   Title of Case
                 </label>
                 <Input 
                 id="title" 
                   type="text"
-                  placeholder="Title"
+                  placeholder="Title "
                   {...register("title")}
-                  className="w-[70vw] ml-6 mt-5 text-[1.1rem]"
+                  className="w-[70vw] ml-6 mt-5 text-[1.1rem] border-2 border-gray-400  text-gray-800"
                 />
               </div>
               <div className="flex flex-col">
@@ -99,7 +99,7 @@ const AddCase = () => {
                 <Textarea
                 {...register("description")}
                   placeholder="Type your description here."
-                  className="border text-[1.1rem] border-gray-300 h-10 mt-3 ml-6 w-[70vw] pl-5 rounded-md"
+                  className="border-2 border-gray-400  text-gray-800 text-[1.1rem] h-10 mt-3 ml-6 w-[70vw] pl-5 rounded-md"
                 />
               </div>
               <div className="flex flex-row text-[1.1rem]">
@@ -108,7 +108,7 @@ const AddCase = () => {
                     Evidence Type
                   </label>
                   <Select onValueChange={(value) => setValue("evidenceType", value)} >
-                    <SelectTrigger className="h-10 mt-3 ml-6 w-80 pl-5 rounded-md ">
+                    <SelectTrigger className="h-10 mt-3 ml-6 w-80 pl-5 rounded-md border-2 border-gray-400  text-gray-800 ">
                       <SelectValue placeholder="Evidence Type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -126,7 +126,7 @@ const AddCase = () => {
                     Status
                   </label>
                   <Select  onValueChange={(value) => setValue("status", value)} >
-                    <SelectTrigger className="h-10 mt-3 ml-6  w-80 pl-5 rounded-md">
+                    <SelectTrigger className="h-10 mt-3 ml-6  w-80 pl-5 rounded-md border-2 border-gray-400  text-gray-800">
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
                     <SelectContent>
@@ -141,7 +141,7 @@ const AddCase = () => {
                     Priority
                   </label>
                   <Select>
-                    <SelectTrigger className="h-10 mt-3 ml-6  w-80 pl-5 rounded-md">
+                    <SelectTrigger className="h-10 mt-3 ml-6  w-80 pl-5 rounded-md border-2 border-gray-400  text-gray-800">
                       <SelectValue placeholder="Priority" />
                     </SelectTrigger>
                     <SelectContent>
@@ -162,10 +162,10 @@ const AddCase = () => {
                     {...register("chainOfCustody.receivedBy")}
                       type="text"
                       placeholder="Name of receiver"
-                      className=" w-64 ml-6 mt-5 text-[1.1rem]"
+                      className=" w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400  text-gray-800"
                     />
                   </div>
-                  <div className="flex ml-6 mt-5">
+                  <div className="flex ml-6 mt-5 border-2 border-gray-400  text-gray-800">
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -198,7 +198,7 @@ const AddCase = () => {
                     {...register("chainOfCustody.location")}
                       type="text"
                       placeholder="receive at"
-                      className=" w-64 ml-6 mt-5 text-[1.1rem]"
+                      className=" w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400  text-gray-800"
                     />
                   </div>
                   <div className="">
@@ -206,7 +206,7 @@ const AddCase = () => {
                      {...register("chainOfCustody.notes")}
                       type="text"
                       placeholder="What to add any Note"
-                      className=" w-64 ml-6 mt-5 text-[1.1rem]"
+                      className=" w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400  text-gray-800"
                     />
                   </div>
                 </div>
@@ -221,7 +221,7 @@ const AddCase = () => {
                     {...register("chainOfCustody.name")}
                       type="text"
                       placeholder="Name of Tool"
-                      className=" w-64 ml-6 mt-5 text-[1.1rem]"
+                      className=" w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400  text-gray-800"
                     />
                   </div>
                   <div className="">
@@ -229,7 +229,7 @@ const AddCase = () => {
                     {...register("chainOfCustody.version")}
                       type="text"
                       placeholder="Version Use"
-                      className=" w-64 ml-6 mt-5 text-[1.1rem]"
+                      className=" w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400  text-gray-800"
                     />
                   </div>
                   <div className="">
@@ -237,13 +237,13 @@ const AddCase = () => {
                     {...register("chainOfCustody.notes")}
                       type="text"
                       placeholder="What to add any Note"
-                      className=" w-64 ml-6 mt-5 text-[1.1rem]"
+                      className=" w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400  text-gray-800"
                     />
                   </div>
                 </div>
               </div>
               <div className="flex flex-col">
-                <label htmlFor="" className="text-gray-500 ml-6 mt-5">
+                <label htmlFor="" className="text-gray-500 ml-6 mt-5 ">
                   Finding
                 </label>
                 <div className="flex flex-row">
@@ -251,16 +251,16 @@ const AddCase = () => {
                     <Textarea
                     {...register("chainOfCustody.summary")}
                       placeholder="Type your summary  here."
-                      className="border text-[1.1rem] border-gray-300 h-10 mt-3 ml-6 w-80 pl-5 rounded-md"
+                      className=" text-[1.1rem] border-2 border-gray-400  text-gray-800 h-10 mt-3 ml-6 w-80 pl-5 rounded-md"
                     />
                   </div>
                   <div className="">
                     <Textarea
                     {...register("chainOfCustody.details")}
                       placeholder="Type your details  here."
-                      className="border text-[1.1rem] border-gray-300 h-10 mt-3 ml-6 w-80 pl-5 rounded-md"
+                      className=" text-[1.1rem] border-2 border-gray-400  text-gray-800 h-10 mt-3 ml-6 w-80 pl-5 rounded-md"
                     />
-                  </div>
+                  </div> 
                   <div className="">
                     <Popover>
                       <PopoverTrigger asChild>
@@ -268,7 +268,7 @@ const AddCase = () => {
                           variant={"outline"}
                           className={cn(
                             "w-[240px] ml-10 mt-5 text-[1.1rem]  justify-start text-left font-normal",
-                            !date && "text-muted-foreground"
+                            !date && "text-muted-foreground border-2 border-gray-400  text-gray-800"
                           )}
                         >
                           <CalendarIcon />
@@ -300,7 +300,7 @@ const AddCase = () => {
                           variant={"outline"}
                           className={cn(
                             "w-[240px] ml-7 mt-5 text-[1.1rem]  justify-start text-left font-normal",
-                            !date && "text-muted-foreground"
+                            !date && "text-muted-foreground border-2 border-gray-400  text-gray-800"
                           )}
                         >
                           <CalendarIcon />
@@ -319,7 +319,7 @@ const AddCase = () => {
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <label htmlFor="" className="text-gray-500 ml-6 mt-5">
+                  <label htmlFor="" className="text-gray-500 ml-6 mt-5 ">
                     Update At
                   </label>
                   <div className="">
@@ -329,7 +329,7 @@ const AddCase = () => {
                           variant={"outline"}
                           className={cn(
                             "w-[240px] ml-7 mt-5 text-[1.1rem]  justify-start text-left font-normal",
-                            !date && "text-muted-foreground"
+                            !date && "text-muted-foreground border-2 border-gray-400  text-gray-800"
                           )}
                         >
                           <CalendarIcon />
@@ -349,8 +349,8 @@ const AddCase = () => {
                 </div>
               </div>
 
-            <button type="submit" className="btn btn-active btn-primary ml-6 text-[1.2rem] w-44 mt-10">Create Case</button>
-            <button type="submit"className="btn btn-active btn-primary ml-6 text-[1.2rem] w-44 mt-10"><a href="/dashboard/ManageCase">Manage Case</a></button>
+            <button type="submit" className="btn dark:bg-[#001845] btn-active bg-[#00b4d8] text-white  ml-6 text-[1.2rem] w-44 mt-10">Create Case</button>
+            <button type="submit"className="btn dark:bg-[#001845] btn-active bg-[#00b4d8] text-white ml-6 text-[1.2rem] w-44 mt-10"><a href="/dashboard/ManageCase">Manage Case</a></button>
 
             </form>
           </CardContent>

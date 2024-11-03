@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { auth } from "./Firebase";
 import Login from './Login'
+import Loginpage from "./Loginpage";
 
 const Navabar = () => {
 
@@ -61,19 +62,19 @@ const Navabar = () => {
   return (
     <>
       <div
-        className={`max-w-screen-2xl container mx-auto md:px-20 px-4 fixed top-0 left-0 z-50 dark:bg-slate-900 dark:text-white ${
+        className={`max-w-screen-2xl bg-[#979dac] pb-3 container mx-auto md:px-20 px-4 fixed top-0 left-0 z-50 dark:bg-slate-900 dark:text-white ${
           sticky
             ? "sticky-navbar shadow-md bg-base-100 duration-300 transition-all ease-in-out"
             : ""
         }`}
       >
-        <div className="navbar ">
-          <div className="navbar-start pr-3 dark:bg-slate-900 dark:text-white">
+        <div className="navbar">
+          <div className="navbar-start pr-3 dark:bg-slate-900 dark:text-white ">
             <div className="search hidden md:block px-4 ">
-              <label className=" px-2 py-1 border rounded-md flex items-center gap-2 ">
+              <label className=" px-2 py-1 border-2 dark:border-gray-300 border-gray-500 rounded-md flex items-center gap-2 ">
                 <input
                   type="text"
-                  className="grow outline-none dark:bg-slate-900 dark:text-white w-52"
+                  className=" outline-none text-yellow-300 dark:placeholder-gray-300 placeholder-gray-800 dark:bg-slate-900 dark:text-white w-52 bg-[#979dac] "
                   placeholder="Search"
                 />
                 <svg
@@ -105,11 +106,13 @@ const Navabar = () => {
                   <summary>{userDetails.displayName}</summary>
                   <ul class="bg-base-100 rounded-t-none p-5 fixed z-50 dark:bg-slate-900 dark:text-white ">
                     <li>
-                    <a onClick={()=>document.getElementById("my_modal_3").showModal()}>Login</a>
-                    <Login/>
+                    <a href="/login" >Login</a>
                     </li>
                     <li>
-                      <a onClick={handlelogout} className="w-44 -mt-3">Logout</a> 
+                    <a href="/signin" >SignUp</a>
+                    </li>
+                    <li>
+                      <a onClick={handlelogout} className="w-44 ">Logout</a> 
                     </li>
                   </ul>
                 </details>
@@ -153,25 +156,7 @@ const Navabar = () => {
                 <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
               </svg>
             </label>
-            <button className="btn btn-ghost btn-circle md:ml-5 md:mt-1">
-              <div className="indicator">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                  />
-                </svg>
-                <span className="badge badge-xs badge-primary indicator-item"></span>
-              </div>
-            </button>
+            
           </div>
         </div>
       </div>

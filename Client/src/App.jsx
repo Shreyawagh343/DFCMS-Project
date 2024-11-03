@@ -9,6 +9,8 @@ import DashboardA from './Pages/DashboardA';
 import ManageCasePage from './Pages/ManageCasePage';
 import DashboardB from './Pages/DashboardB';
 import AddCasePage from './Pages/AddCasePage';
+import Loginpage from './Components/Loginpage';
+import LoginPage from './Pages/LoginPage';
 
 
 
@@ -19,7 +21,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/home' element={<Profile/>}/>
-      <Route path='/login' element={<Login/>}/>
+      <Route path='/login' element={<LoginPage/>}/>
       <Route path='/signin' element={<Sign/>}/>
       <Route path="/dashboard/Office12" element={<DashboardB/>} />
       <Route path="/dashboard/Office13" element={<DashboardA/>} />
