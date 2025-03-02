@@ -350,7 +350,7 @@ const AddCase = () => {
               </div>
 
             <button type="submit" className="btn dark:bg-[#001845] btn-active bg-[#00b4d8] text-white  ml-6 text-[1.2rem] w-44 mt-10">Create Case</button>
-            <button type="submit"className="btn dark:bg-[#001845] btn-active bg-[#00b4d8] text-white ml-6 text-[1.2rem] w-44 mt-10"><a href="/dashboard/ManageCase">Manage Case</a></button>
+            <button className="btn dark:bg-[#001845] btn-active bg-[#00b4d8] text-white ml-6 text-[1.2rem] w-44 mt-10"><a href="/dashboard/ManageCase">Manage Case</a></button>
 
             </form>
           </CardContent>

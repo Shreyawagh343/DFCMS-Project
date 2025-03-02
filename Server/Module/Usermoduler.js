@@ -14,11 +14,12 @@ const UserSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    officerCode: {
-        type: String,
-        unique: true,  
-        required: true
-      },
+    role: { type: String, 
+        enum: ['admin', 'officer'], 
+        default: 'officer' 
+    },
+    officerCode: { type: String, unique: false, default: null },
+        
 })
 
 const User = mongoose.model('User',UserSchema)

@@ -53,7 +53,7 @@ const PieChat = () => {
     <>
      <Card className="flex flex-col h-80">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Pie Chart - Donut with Text</CardTitle>
+        <CardTitle>Pie Chart - Visitor</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer

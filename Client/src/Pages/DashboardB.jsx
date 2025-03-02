@@ -6,7 +6,7 @@ import React from "react";
 const DashboardB = () => {
   return (
     <>
-     <div className="w-[100vw] h-[120vh]">
+     <div className="w-[100vw] h-[90vh]">
       <Navabar />
       <div className="">.</div>
       <div className="flex">

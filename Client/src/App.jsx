@@ -3,29 +3,45 @@ import { Toaster } from 'react-hot-toast';
 import Home from './Pages/Home';
 import Profile from './Pages/Profile';
 import Sign from './Components/Sign';
-import Login from './Components/Login';
-import DashboardOffC from './Components/DashboardOffC';
-import DashboardA from './Pages/DashboardA';
 import ManageCasePage from './Pages/ManageCasePage';
-import DashboardB from './Pages/DashboardB';
 import AddCasePage from './Pages/AddCasePage';
-import Loginpage from './Components/Loginpage';
+import AdminDashboard from "./Components/AdminDashboard";
 import LoginPage from './Pages/LoginPage';
+import { Navigate } from 'react-router-dom';
+import OfficerDashboard from './Components/OfficerDashboard';
 
 
 
 function App() {
+  const isAuthenticated = !!localStorage.getItem('token');
  return (
     <>
      <div className="dark:bg-slate-900 dark:text-white">
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/home' element={<Profile/>}/>
-      <Route path='/login' element={<LoginPage/>}/>
+      <Route path='/loginhome' element={<LoginPage/>}/>
       <Route path='/signin' element={<Sign/>}/>
-      <Route path="/dashboard/Office12" element={<DashboardB/>} />
-      <Route path="/dashboard/Office13" element={<DashboardA/>} />
-      <Route path="/dashboard/Office14" element={<DashboardOffC/>} />
+      <Route
+                    path="/officer/:officerCode/dashboard"
+                    element={
+                        isAuthenticated ? (
+                            <OfficerDashboard/>
+                        ) : (
+                            <Navigate to="/login" />
+                        )
+                    }
+                />
+      <Route
+                    path="/dashboard"
+                    element={
+                        isAuthenticated ? (
+                            <AdminDashboard/>
+                        ) : (
+                            <Navigate to="/login" />
+                        )
+                    }
+                />
       <Route path="/dashboard/ManageCase" element={<ManageCasePage/>} />
       <Route path="/dashboard/AddCase" element={<AddCasePage/>} />
     </Routes>

@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Login from "./Login";
+import Loginpage from "./Loginpage";
+
 
 const Sign = () => {
   const {
@@ -40,7 +41,7 @@ const Sign = () => {
         <div className=" md:mt-10 mt-0 md:pt-5 pt-10 md:ml-[32rem] ml-[1rem] h-[45rem] md:w-[30rem] w-11/12 flex flex-col md:border border-0 p-5">
           <h1 className="text-3xl pl-7 relative">Create account</h1>
           <Link
-            to="/home"
+            to="/"
             className="btn btn-sm btn-circle btn-ghost left-[59rem] absolute"
           >
             ✕
@@ -120,23 +121,28 @@ const Sign = () => {
             )}
 
             <label className="text-gray-500 mt-5" htmlFor="label">
-              Comfirm password
+              Role
             </label>
-            <input
-              type="password"
-              name="password"
+            <select
+              name="role"
               className="border border-gray-300 h-10 mt-3 w-11/12 pl-5 rounded-md"
-            />
+              {...register("role", {
+                required: { value: true, message: "This field is required" },
+              })}
+            >
+              <option value="user">officer</option>
+              <option value="admin">admin</option>
+            </select>
 
             <label htmlFor="label" className="text-gray-500 mt-5">
               Officer Code
             </label>
             <input
-              type="number"
-              name="number"
+              type="text"
+              name="text"
               className="border border-gray-300 h-10 mt-3 w-11/12 pl-5 rounded-md"
               {...register("officerCode", {
-                required: { value: true, message: "This field is required" },
+                required: { value: false, message: "This field is required" },
               })}
             />
             {errors.officerCode && (
@@ -149,15 +155,12 @@ const Sign = () => {
             </button>
             <p className="mt-3 md:ml-16 ml-2 text-[1.1rem]">
               Already have a account!
-              <p
+              <Link to="/loginhome"><p
                 className="text-blue-500 ml-44 -mt-6 cursor-pointer"
-                onClick={() =>
-                  document.getElementById("my_modal_3").showModal()
-                }
               >
                 Login
-              </p>
-              <Login />
+              </p> </Link>
+              <Loginpage/>
             </p>
           </form>
         </div>

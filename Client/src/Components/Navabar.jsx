@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { auth } from "./Firebase";
-import Login from './Login'
-import Loginpage from "./Loginpage";
 
 const Navabar = () => {
 
@@ -62,7 +60,7 @@ const Navabar = () => {
   return (
     <>
       <div
-        className={`max-w-screen-2xl bg-[#979dac] pb-3 container mx-auto md:px-20 px-4 fixed top-0 left-0 z-50 dark:bg-slate-900 dark:text-white ${
+        className={`max-w-screen-2xl bg-[#dbdee8] pb-3 container mx-auto md:px-20 px-4 fixed top-0 left-0 z-50 dark:bg-slate-900 dark:text-white ${
           sticky
             ? "sticky-navbar shadow-md bg-base-100 duration-300 transition-all ease-in-out"
             : ""
@@ -74,7 +72,7 @@ const Navabar = () => {
               <label className=" px-2 py-1 border-2 dark:border-gray-300 border-gray-500 rounded-md flex items-center gap-2 ">
                 <input
                   type="text"
-                  className=" outline-none text-yellow-300 dark:placeholder-gray-300 placeholder-gray-800 dark:bg-slate-900 dark:text-white w-52 bg-[#979dac] "
+                  className=" outline-none text-yellow-300 dark:placeholder-gray-300 placeholder-gray-800 dark:bg-slate-900 dark:text-white w-52 bg-[#dbdee8]"
                   placeholder="Search"
                 />
                 <svg

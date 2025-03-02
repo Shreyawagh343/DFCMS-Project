@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { auth } from "./Firebase";
 
+
 const SidebarComp = () => {
   const [userDetails, setuserDetails] = useState(null);
   const fetchUserData = async () => {
@@ -25,7 +26,7 @@ const SidebarComp = () => {
   return (
     <>
     <div className="dark:bg-slate-900 dark:text-white">
-      <div className="drawer relative z-40">
+      <div className="drawer relative z-50">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           {/* Page content here */}
@@ -36,7 +37,7 @@ const SidebarComp = () => {
             Manage Cases
           </label>
         </div>
-        <div className="drawer-side mt-16">
+        <div className="drawer-side ">
           <label
             htmlFor="my-drawer"
             aria-label="close sidebar"
