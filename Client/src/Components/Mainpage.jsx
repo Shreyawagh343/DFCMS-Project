@@ -1,15 +1,27 @@
-import React from 'react'
-import Signingoogle from './Signingoogle'
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Mainpage = () => {
   return (
-    <>
-    <div className="">
-        <h1 className='text-[1.2rem] w-[60vw] ml-[22rem] mt-[14rem]'><span className='text-blue-500'>Welcome to the Digital Forensic Management System!</span> Our platform ensures secure and efficient management of digital evidence, streamlining investigations and enhancing collaboration. Simplify your forensic processes with us and safeguard the digital world!</h1>
-       <Signingoogle/>
-    </div>
-    </>
-  )
-}
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-50 flex flex-col justify-center items-center">
+      {/* Main Content */}
+      <div className="max-w-4xl text-center px-6">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-8">
+          <span className="text-[#023E8A]">Welcome to the Digital Forensic Management System!</span>
+        </h1>
+        <p className="text-lg md:text-xl text-gray-600 mb-12">
+          Our platform ensures secure and efficient management of digital evidence, streamlining investigations and enhancing collaboration. Simplify your forensic processes with us and safeguard the digital world!
+        </p>
 
-export default Mainpage
+        {/* Button */}
+        <Link to="/signin">
+          <button className="bg-blue-600 text-white text-lg font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-[#0096C7] transition duration-300">
+            Use Username and Password
+          </button>
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+export default Mainpage;

@@ -1,18 +1,7 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useState , useEffect } from "react";
-import axios from "axios";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-  SheetFooter,
-  SheetClose,
-} from "@/components/ui/sheet";
+import { useParams } from 'react-router-dom';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,24 +13,46 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import EditCase from "./EditCases";
 
 const TableCase = () => {
-    const [Caseinformation, setCaseinformation] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { officerCode } = useParams();
+        const [cases, setCases] = useState([]);
       
         useEffect(() => {
-          axios.get("http://localhost:4001/cases/AllCase")
-            .then((response) => {
-                setCaseinformation(response.data || []);
-              setLoading(false);
-            })
-            .catch((error) => {
-              console.error('Error fetching payments:', error);
-              setLoading(false);
-            });
-        }, []);
-        
-        if (loading) return <p>Loading...</p>;
+          const fetchCases = async () => {
+              const token = localStorage.getItem('authtoken');
+              try {
+                  const response = await fetch(`http://localhost:4001/cases/officer/${officerCode}`, {
+                      method: 'GET',
+                      headers: {
+                          'Authorization': `Bearer ${token}`,
+                          'Content-Type': 'application/json',
+                      },
+                  });
+                  if (response.status === 401) {
+                      // Handle unauthorized access
+                      console.log("Unauthorized access - redirecting to login");
+                      localStorage.removeItem('authtoken');
+                      return;
+                  }
+  
+                  if (!response.ok) {
+                      throw new Error('Failed to fetch cases');
+                  }
+  
+                  const data = await response.json();
+                  console.log("Fetched Data:", data); // Debugging: Log the fetched data
+                  setCases(data.cases); // Set the fetched cases to state
+              } catch (error) {
+                  console.error("Fetch Error:", error); // Debugging: Log the error
+                  setError(error.message); // Set error message if something goes wrong
+              }
+          };
+  
+          fetchCases();
+      }, [officerCode]); // Re-fetch when officerCode changes
+  
   return (
     <>
 
@@ -59,7 +70,7 @@ const TableCase = () => {
             </tr>
           </thead>
           <tbody>
-          {Caseinformation.map((cases) => (
+          {cases.map((cases) => (
               <tr key={cases.createdBy}>
                 <th>
                   <label className="flex">
@@ -102,40 +113,7 @@ const TableCase = () => {
                 </th>
                 <th>
                   {/* Edit Sheet */}
-                  <Sheet>
-                    <SheetTrigger>
-                    
-                    <button className="btn btn-outline  btn-success">Edit</button>
-                    </SheetTrigger>
-                    <SheetContent>
-                      <SheetHeader>
-                        <SheetTitle>Edit profile</SheetTitle>
-                        <SheetDescription>
-                          Make changes to your profile here. Click save when
-                          you're done.
-                        </SheetDescription>
-                      </SheetHeader>
-                      <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <label htmlFor="">Title</label>
-                          <Input id="name" className="col-span-3" />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <label htmlFor="">Status</label>
-                          <Input id="status" className="col-span-3" />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <label htmlFor="">Priority</label>
-                          <Input id="priority" className="col-span-3" />
-                        </div>
-                      </div>
-                      <SheetFooter>
-                        <SheetClose asChild>
-                          <Button type="submit">Save changes</Button>
-                        </SheetClose>
-                      </SheetFooter>
-                    </SheetContent>
-                  </Sheet>
+                  
                 </th>
               </tr>
           ))}

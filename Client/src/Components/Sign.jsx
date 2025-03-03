@@ -3,28 +3,28 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Loginpage from "./Loginpage";
-
 
 const Sign = () => {
   const {
     register,
-    handleSubmit, 
+    handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
     const userinfo = {
       fullname: data.fullname,
       email: data.email,
       password: data.password,
       officerCode: data.officerCode,
+      role: data.role,
     };
     axios
       .post("http://localhost:4001/users/SignIn", userinfo)
       .then((res) => {
         console.log(res.data);
         if (res.data) {
-          toast.success("Successfully Signin!");
+          toast.success("Successfully Signed In!");
         }
         localStorage.setItem("users", JSON.stringify(res.data.user));
       })
@@ -35,137 +35,176 @@ const Sign = () => {
         }
       });
   };
+
   return (
-    <>
-      <div className="dark:bg-slate-900 dark:text-white ">
-        <div className=" md:mt-10 mt-0 md:pt-5 pt-10 md:ml-[32rem] ml-[1rem] h-[45rem] md:w-[30rem] w-11/12 flex flex-col md:border border-0 p-5">
-          <h1 className="text-3xl pl-7 relative">Create account</h1>
-          <Link
-            to="/"
-            className="btn btn-sm btn-circle btn-ghost left-[59rem] absolute"
-          >
-            ✕
-          </Link>
-          <p className="pl-7">Get started with an account.</p>
-          <form
-            className="flex flex-col pl-7 mt-10"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <label htmlFor="" className="text-gray-500">
-              Name
-            </label>
-            <input
-              type="text"
-              name="fullname"
-              className="border border-gray-300 h-10 mt-3 w-11/12 pl-5 rounded-md"
-              {...register("fullname", {
-                required: { value: true, message: "This field is required" },
-                minLength: {
-                  value: 3,
-                  message: "name must have letters between 3 and 25",
-                },
-                maxLength: {
-                  value: 25,
-                  message: "name must have letters between 3 and 25",
-                },
-              })}
-            />
-            {errors.fullname && (
-              <span className="text-red-600 text-xs pt-3">
-                {errors.fullname.message}
-              </span>
-            )}
+    <div className="min-h-screen flex">
+      {/* Left Side: Visual Section */}
+      <div
+        className="hidden md:flex w-1/2 items-center justify-center"
+        style={{
+          backgroundImage: "url('https://img.freepik.com/free-photo/african-american-hacker-holding-tablet-hack-online-system-causing-malware-network-planning-cyberattack-looking-security-server-access-database-steal-passwords_482257-62559.jpg?uid=R155647787&ga=GA1.1.74947205.1720868009&semt=ais_hybrid')",
+          backgroundSize: "cover", // Ensures the image covers the entire container
+          backgroundPosition: "center", // Centers the image
+          backgroundRepeat: "no-repeat", // Prevents the image from repeating
+          height: "100vh", // Full viewport height
+        }}
+      >
+        <div className="text-center text-white p-8  rounded-lg">
+          <h1 className="text-5xl font-bold mb-4">Welcome!</h1>
+          <p className="text-xl">
+            Join our platform to manage digital forensic cases efficiently and securely.
+          </p>
+        </div>
+      </div>
 
-            <label htmlFor="label" className="text-gray-500 mt-5">
-              Email address
-            </label>
-            <input
-              type="email"
-              name="email"
-              className="border border-gray-300 h-10 mt-3 w-11/12 pl-5 rounded-md"
-              {...register("email", {
-                required: { value: true, message: "This field is required" },
-              })}
-            />
-            {errors.email && (
-              <span className="text-red-600 text-xs pt-3">
-                {errors.email.message}
-              </span>
-            )}
+      {/* Right Side: Form Section */}
+      <div className="w-full md:w-1/2 flex items-center justify-center p-8">
+        <div className="w-full max-w-md">
+          <h1 className="text-3xl font-bold mb-6">Create Account</h1>
+          <p className="text-gray-600 mb-8">Get started with an account.</p>
 
-            <label htmlFor="label" className="text-gray-500 mt-5">
-              Create password
-            </label>
-            <input
-              type="password"
-              name="password"
-              className="border border-gray-300 h-10 mt-3 w-11/12 pl-5 rounded-md"
-              {...register("password", {
-                required: { value: true, message: "This field is required" },
-                minLength: {
-                  value: 8,
-                  message:
-                    "Min. 8 characters, 1 lowercase, 1 uppercase and 1 number",
-                },
-                pattern: {
-                  value: 8,
-                  message:
-                    "Min. 8 characters, 1 lowercase, 1 uppercase and 1 number",
-                },
-              })}
-            />
-            {errors.password && (
-              <span className="text-red-600 text-xs pt-3">
-                {errors.password.message}
-              </span>
-            )}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Name Field */}
+            <div>
+              <label htmlFor="fullname" className="block text-sm font-medium text-gray-700">
+                Name
+              </label>
+              <input
+                type="text"
+                id="fullname"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="John Doe"
+                {...register("fullname", {
+                  required: { value: true, message: "This field is required" },
+                  minLength: {
+                    value: 3,
+                    message: "Name must have between 3 and 25 characters",
+                  },
+                  maxLength: {
+                    value: 25,
+                    message: "Name must have between 3 and 25 characters",
+                  },
+                })}
+              />
+              {errors.fullname && (
+                <span className="text-red-600 text-xs mt-1">
+                  {errors.fullname.message}
+                </span>
+              )}
+            </div>
 
-            <label className="text-gray-500 mt-5" htmlFor="label">
-              Role
-            </label>
-            <select
-              name="role"
-              className="border border-gray-300 h-10 mt-3 w-11/12 pl-5 rounded-md"
-              {...register("role", {
-                required: { value: true, message: "This field is required" },
-              })}
-            >
-              <option value="user">officer</option>
-              <option value="admin">admin</option>
-            </select>
+            {/* Email Field */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                Email address
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="john.doe@example.com"
+                {...register("email", {
+                  required: { value: true, message: "This field is required" },
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address",
+                  },
+                })}
+              />
+              {errors.email && (
+                <span className="text-red-600 text-xs mt-1">
+                  {errors.email.message}
+                </span>
+              )}
+            </div>
 
-            <label htmlFor="label" className="text-gray-500 mt-5">
-              Officer Code
-            </label>
-            <input
-              type="text"
-              name="text"
-              className="border border-gray-300 h-10 mt-3 w-11/12 pl-5 rounded-md"
-              {...register("officerCode", {
-                required: { value: false, message: "This field is required" },
-              })}
-            />
-            {errors.officerCode && (
-              <span className="text-red-600 text-xs pt-3">
-                {errors.email.officerCode}
-              </span>
-            )}
-            <button className="border border-gray-300 h-10 mt-5 w-11/12 pl-5 rounded-md bg-blue-500 text-white">
-              Create account
-            </button>
-            <p className="mt-3 md:ml-16 ml-2 text-[1.1rem]">
-              Already have a account!
-              <Link to="/loginhome"><p
-                className="text-blue-500 ml-44 -mt-6 cursor-pointer"
+            {/* Password Field */}
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                Create password
+              </label>
+              <input
+                type="password"
+                id="password"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="********"
+                {...register("password", {
+                  required: { value: true, message: "This field is required" },
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
+                  pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+                    message:
+                      "Password must contain at least one lowercase letter, one uppercase letter, and one number",
+                  },
+                })}
+              />
+              {errors.password && (
+                <span className="text-red-600 text-xs mt-1">
+                  {errors.password.message}
+                </span>
+              )}
+            </div>
+
+            {/* Role Field */}
+            <div>
+              <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                Role
+              </label>
+              <select
+                id="role"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                {...register("role", {
+                  required: { value: true, message: "This field is required" },
+                })}
               >
+                <option value="officer">Officer</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+
+            {/* Officer Code Field */}
+            <div>
+              <label htmlFor="officerCode" className="block text-sm font-medium text-gray-700">
+                Officer Code
+              </label>
+              <input
+                type="text"
+                id="officerCode"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="OFF123"
+                {...register("officerCode", {
+                  required: { value: false, message: "This field is required" },
+                })}
+              />
+              {errors.officerCode && (
+                <span className="text-red-600 text-xs mt-1">
+                  {errors.officerCode.message}
+                </span>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              Create Account
+            </button>
+
+            {/* Login Link */}
+            <p className="text-center text-sm text-gray-600">
+              Already have an account?{" "}
+              <Link to="/loginhome" className="text-blue-600 hover:underline">
                 Login
-              </p> </Link>
-              <Loginpage/>
+              </Link>
             </p>
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

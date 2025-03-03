@@ -62,16 +62,12 @@ const caseSchema = new mongoose.Schema({
       },
       addedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"User",
+        ref:"Officer",
         required: true,
       },
     },
   ],  
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref:"User",
-    required: true,
-  },
+  createdBy: { type: String, required: true },
   createdAt: {
     type: Date,
     default: Date.now,

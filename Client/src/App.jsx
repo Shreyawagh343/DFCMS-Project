@@ -8,7 +8,7 @@ import AddCasePage from './Pages/AddCasePage';
 import AdminDashboard from "./Components/AdminDashboard";
 import LoginPage from './Pages/LoginPage';
 import { Navigate } from 'react-router-dom';
-import OfficerDashboard from './Components/OfficerDashboard';
+import OfficerDashboard from './Pages/OfficerDashboard';
 
 
 
@@ -28,7 +28,7 @@ function App() {
                         isAuthenticated ? (
                             <OfficerDashboard/>
                         ) : (
-                            <Navigate to="/login" />
+                            <Navigate to="/loginhome" />
                         )
                     }
                 />
@@ -38,12 +38,12 @@ function App() {
                         isAuthenticated ? (
                             <AdminDashboard/>
                         ) : (
-                            <Navigate to="/login" />
+                            <Navigate to="/loginhome" />
                         )
                     }
                 />
       <Route path="/dashboard/ManageCase" element={<ManageCasePage/>} />
-      <Route path="/dashboard/AddCase" element={<AddCasePage/>} />
+      <Route path="/AddCase" element={<AddCasePage/>} />
     </Routes>
     <Toaster />
     </div>

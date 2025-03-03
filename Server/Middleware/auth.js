@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import User from '../Module/Usermoduler.js';
 
-// Middleware to authenticate user, check role, and enforce access control
+
 export const authenticateUser = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   console.log("Authorization Header:", authHeader);
@@ -52,20 +52,18 @@ export const authenticateUser = async (req, res, next) => {
   }
 };
 
-// Example middleware to check officer access
-export const checkOfficerAccess = (req, res, next) => {
-  const { officerCode } = req.params; // Get officerCode from the URL
-  const user = req.user; // User details from the token
 
-  // Check if the user is an officer
+export const checkOfficerAccess = (req, res, next) => {
+  const { officerCode } = req.params; 
+  const user = req.user; // User details from the token
+ 
   if (user.role !== 'officer') {
     return res.status(403).json({ message: "Forbidden: Officers only" });
   }
 
-  // Check if the officer is accessing their own resource
   if (user.officerCode !== officerCode) {
     return res.status(403).json({ message: "Forbidden: You do not have access to this resource" });
   }
 
-  next(); // Proceed to the next middleware or route handler
+  next(); 
 };

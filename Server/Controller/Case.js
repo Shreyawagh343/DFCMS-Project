@@ -1,7 +1,5 @@
 import Case from "../Module/CaseModule.js";
-import uploadPDF from "../Middleware/Multer.js" // Import the multer middleware
-import fs from 'fs';
-import path from 'path';
+
 
 export const createCase = async (req, res) => {
     const {
