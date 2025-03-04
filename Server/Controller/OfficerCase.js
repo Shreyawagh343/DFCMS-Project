@@ -1,5 +1,6 @@
 import Case from "../Module/CaseModule.js"; 
 import User from "../Module/Usermoduler.js";
+import mongoose from "mongoose"
 
 export const createCase = async (req, res) => {
     const {
@@ -40,9 +41,11 @@ export const createCase = async (req, res) => {
         })),
         createdBy: userId, // Set createdBy to the authenticated user's ID
       });
-  
       const savedCase = await newCase.save();
       res.status(201).json(savedCase);
+
+   // Default dashboard
+       
     } catch (error) {
       console.error("Error creating the forensic case:", error);
       res.status(500).json({ error: "Error creating the forensic case", details: error.message });
@@ -65,10 +68,32 @@ export const createCase = async (req, res) => {
         "createdBy",
         "fullname email"
       );
-  
-      res.status(200).json({ cases });
+      res.status(200).json({ cases});
     } catch (error) {
       console.log("Error fetching cases:", error);
+      res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+  };
+  export const getTaskDetails= async (req, res) => {
+    try {
+      const { caseId } = req.params;
+      if (!mongoose.Types.ObjectId.isValid(caseId)) {
+        return res.status(400).json({ message: "Invalid case ID" });
+      }
+  
+      // Find and delete the case
+      const getCase = await Case.findById(caseId);
+  
+      if (!getCase) {
+        return res.status(404).json({ message: "Case not found" });
+      }
+  
+      let redirectUrl = `/officer/${getCase.id}/dashboard`; // Default dashboard
+      
+console.log("Redirect URL:", redirectUrl);
+      res.status(200).json({ message: "get the case", getCase,redirectUrl});
+    } catch (error) {
+      console.log("Error deleting case:", error);
       res.status(500).json({ message: "Internal server error", error: error.message });
     }
   };

@@ -4,8 +4,7 @@ import React from 'react'
 const LoginPage = () => {
   return (
     <>
-    <div className="w-[100vw] h-[120vh]">
-      <div className="">.</div>
+    <div className="w-[100vw]">
     <Loginpage/>
     </div>
     </>

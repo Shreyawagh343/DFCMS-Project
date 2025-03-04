@@ -9,8 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useParams } from "react-router-dom";
 
 const TableDash = () => {
+  const {caseId}= useParams();
   const [Caseinformation, setCaseinformation] = useState([]);
   const [loading, setLoading] = useState(true);
 

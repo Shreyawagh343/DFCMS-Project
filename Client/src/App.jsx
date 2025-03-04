@@ -1,7 +1,6 @@
 import { Route,Routes } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast';
 import Home from './Pages/Home';
-import Profile from './Pages/Profile';
 import Sign from './Components/Sign';
 import ManageCasePage from './Pages/ManageCasePage';
 import AddCasePage from './Pages/AddCasePage';
@@ -9,6 +8,11 @@ import AdminDashboard from "./Components/AdminDashboard";
 import LoginPage from './Pages/LoginPage';
 import { Navigate } from 'react-router-dom';
 import OfficerDashboard from './Pages/OfficerDashboard';
+import EditCase from './Components/EditCases';
+import SpecificCase from './Pages/SpecificCase';
+import Contpage from './Pages/ContPage';
+
+
 
 
 
@@ -19,9 +23,9 @@ function App() {
      <div className="dark:bg-slate-900 dark:text-white">
     <Routes>
       <Route path='/' element={<Home/>}/>
-      <Route path='/home' element={<Profile/>}/>
       <Route path='/loginhome' element={<LoginPage/>}/>
       <Route path='/signin' element={<Sign/>}/>
+      <Route path='/:officerCode/Contact' element={<Contpage/>}/>
       <Route
                     path="/officer/:officerCode/dashboard"
                     element={
@@ -29,6 +33,26 @@ function App() {
                             <OfficerDashboard/>
                         ) : (
                             <Navigate to="/loginhome" />
+                        )
+                    }
+                />
+      <Route
+                    path="/case/:caseId/dashboard"
+                    element={
+                        isAuthenticated ? (
+                           <SpecificCase/>
+                        ) : (
+                            <Navigate to="/officer/:officerCode/dashboard" />
+                        )
+                    }
+                />
+      <Route
+                    path="/case/:caseId/dashboard"
+                    element={
+                        isAuthenticated ? (
+                            <EditCase/>
+                        ) : (
+                            <Navigate to="/officer/:officerCode/dashboard" />
                         )
                     }
                 />

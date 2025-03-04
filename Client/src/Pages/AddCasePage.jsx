@@ -1,5 +1,5 @@
 import AddCase from '@/Components/AddCase'
-import Navabar from '@/Components/Navabar'
+import OfficersCases from '@/Components/OfficersCases'
 import React from 'react'
 
 
@@ -7,10 +7,8 @@ const AddCasePage = () => {
   return (
     <>
     <div className="w-[100vw] h-[180vh]">
-    <div className="">.</div>
-    <Navabar/>
-    
-    <AddCase/>
+    <OfficersCases/>
+     <AddCase/>
     </div>
     </>
   )

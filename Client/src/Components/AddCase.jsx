@@ -29,8 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-import SideDrawer from "./SideDrawer";
+import { useNavigate } from "react-router-dom";
 
 const AddCase = () => {
   const [chainOfCustodyDate, setChainOfCustodyDate] = useState();
@@ -38,23 +37,23 @@ const AddCase = () => {
   const [createdAtDate, setCreatedAtDate] = useState();
   const [updatedAtDate, setUpdatedAtDate] = useState();
   const { register, handleSubmit, reset, setValue } = useForm();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     const token = localStorage.getItem("authtoken");
 
-    // Check if the user is authenticated
     if (!token) {
       toast.error("You must be logged in to create a case.");
-      navigate("/login"); // Redirect to login page
+      navigate("/login");
       return;
     }
 
-    // Format dates
     data.chainOfCustody = [
       {
         receivedBy: data.chainOfCustodyReceivedBy,
-        dateReceived: chainOfCustodyDate ? format(chainOfCustodyDate, "yyyy-MM-dd") : null,
+        dateReceived: chainOfCustodyDate
+          ? format(chainOfCustodyDate, "yyyy-MM-dd")
+          : null,
         location: data.chainOfCustodyLocation,
         notes: data.chainOfCustodyNotes,
       },
@@ -73,7 +72,7 @@ const AddCase = () => {
         summary: data.findingsSummary,
         details: data.findingsDetails,
         createdAt: findingsDate ? format(findingsDate, "yyyy-MM-dd") : null,
-        addedBy: JSON.parse(localStorage.getItem("users")).officerCode, // Use the authenticated user's ID
+        addedBy: JSON.parse(localStorage.getItem("users")).officerCode,
       },
     ];
 
@@ -88,16 +87,16 @@ const AddCase = () => {
       );
 
       if (response.data) {
+        localStorage.setItem("cases", JSON.stringify(response.data));
         toast.success("Case successfully created!");
         reset();
-       // Redirect to Manage Case page
       }
     } catch (error) {
       if (error.response) {
         console.error("Error response:", error.response.data);
         if (error.response.status === 401) {
           toast.error("Unauthorized: Please log in again.");
-          navigate("/loginhome"); // Redirect to login page if unauthorized
+          navigate("/loginhome");
         } else {
           toast.error(`Error: ${error.response.data.message}`);
         }
@@ -109,303 +108,313 @@ const AddCase = () => {
   };
 
   return (
-    <>
-      <div className="mt-28 ml-28 text-[1.3rem] w-[85vw]">
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              <h1 className="text-[2.3rem] ml-8 font-bold text-center">Add Case</h1>
-            </CardTitle>
-            <CardDescription>
-              <p className="text-[1.2rem] ml-8 text-center text-gray-500">
-                Add new forensic cases and ensure all relevant details are
-                accurately captured
-              </p>
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              {/* Title */}
-              <div className="flex flex-col placeholder-gray-800">
-                <label htmlFor="title" className="text-gray-500 ml-6 mt-5">
-                  Title of Case
+    <div className="mt-10 mx-auto max-w-[70vw] p-6 bg-white shadow-lg rounded-lg">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-3xl font-bold text-center text-gray-800">
+            Add Case
+          </CardTitle>
+          <CardDescription className="text-lg text-center text-gray-600">
+            Add new forensic cases and ensure all relevant details are accurately captured
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Title */}
+            <div className="space-y-2">
+              <label htmlFor="title" className="text-gray-700 font-medium">
+                Title of Case
+              </label>
+              <Input
+                id="title"
+                type="text"
+                placeholder="Title"
+                {...register("title")}
+                className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* Description */}
+            <div className="space-y-2">
+              <label htmlFor="description" className="text-gray-700 font-medium">
+                Description of Case
+              </label>
+              <Textarea
+                id="description"
+                placeholder="Type your description here."
+                {...register("description")}
+                className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* Evidence Type, Status, Priority */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <label htmlFor="evidenceType" className="text-gray-700 font-medium">
+                  Evidence Type
                 </label>
+                <Select onValueChange={(value) => setValue("evidenceType", value)}>
+                  <SelectTrigger className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <SelectValue placeholder="Evidence Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="hard drive">Hard Drive</SelectItem>
+                    <SelectItem value="smartphone">Smartphone</SelectItem>
+                    <SelectItem value="computer">Computer</SelectItem>
+                    <SelectItem value="cloud data">Cloud Data</SelectItem>
+                    <SelectItem value="network logs">Network Logs</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="status" className="text-gray-700 font-medium">
+                  Status
+                </label>
+                <Select onValueChange={(value) => setValue("status", value)}>
+                  <SelectTrigger className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="in_progress">In Progress</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="priority" className="text-gray-700 font-medium">
+                  Priority
+                </label>
+                <Select onValueChange={(value) => setValue("priority", value)}>
+                  <SelectTrigger className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <SelectValue placeholder="Priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Chain of Custody */}
+            <div className="space-y-2">
+              <label htmlFor="chainOfCustody" className="text-gray-700 font-medium">
+                Chain Of Custody
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Input
-                  id="title"
                   type="text"
-                  placeholder="Title"
-                  {...register("title")}
-                  className="w-[70vw] ml-6 mt-5 text-[1.1rem] border-2 border-gray-400 text-gray-800"
+                  placeholder="Name of receiver"
+                  {...register("chainOfCustodyReceivedBy")}
+                  className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <div>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                          !chainOfCustodyDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon />
+                        {chainOfCustodyDate ? (
+                          format(chainOfCustodyDate, "PPP")
+                        ) : (
+                          <span>Case Receive on</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={chainOfCustodyDate}
+                        onSelect={setChainOfCustodyDate}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <Input
+                  type="text"
+                  placeholder="Receive at"
+                  {...register("chainOfCustodyLocation")}
+                  className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <Input
+                  type="text"
+                  placeholder="Add any note"
+                  {...register("chainOfCustodyNotes")}
+                  className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
+            </div>
 
-              {/* Description */}
-              <div className="flex flex-col">
-                <label htmlFor="description" className="text-gray-500 ml-6 mt-5">
-                  Description of Case
-                </label>
+            {/* Tools Used */}
+            <div className="space-y-2">
+              <label htmlFor="toolsUsed" className="text-gray-700 font-medium">
+                Tools Used
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Input
+                  type="text"
+                  placeholder="Name of Tool"
+                  {...register("toolsUsedName")}
+                  className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <Input
+                  type="text"
+                  placeholder="Version Used"
+                  {...register("toolsUsedVersion")}
+                  className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <Input
+                  type="text"
+                  placeholder="Add any note"
+                  {...register("toolsUsedNotes")}
+                  className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+
+            {/* Findings */}
+            <div className="space-y-2">
+              <label htmlFor="findings" className="text-gray-700 font-medium">
+                Findings
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Textarea
-                  id="description"
-                  placeholder="Type your description here."
-                  {...register("description")}
-                  className="border-2 border-gray-400 text-gray-800 text-[1.1rem] h-10 mt-3 ml-6 w-[70vw] pl-5 rounded-md"
+                  placeholder="Type your summary here."
+                  {...register("findingsSummary")}
+                  className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-              </div>
-
-              {/* Evidence Type, Status, Priority */}
-              <div className="flex flex-row text-[1.1rem]">
-                <div className="flex flex-col">
-                  <label htmlFor="evidenceType" className="text-gray-500 ml-6 mt-5">
-                    Evidence Type
-                  </label>
-                  <Select onValueChange={(value) => setValue("evidenceType", value)}>
-                    <SelectTrigger className="h-10 mt-3 ml-6 w-80 pl-5 rounded-md border-2 border-gray-400 text-gray-800">
-                      <SelectValue placeholder="Evidence Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="hard drive">Hard Drive</SelectItem>
-                      <SelectItem value="smartphone">Smartphone</SelectItem>
-                      <SelectItem value="computer">Computer</SelectItem>
-                      <SelectItem value="cloud data">Cloud Data</SelectItem>
-                      <SelectItem value="network logs">Network Logs</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex flex-col">
-                  <label htmlFor="status" className="text-gray-500 ml-6 mt-5">
-                    Status
-                  </label>
-                  <Select onValueChange={(value) => setValue("status", value)}>
-                    <SelectTrigger className="h-10 mt-3 ml-6 w-80 pl-5 rounded-md border-2 border-gray-400 text-gray-800">
-                      <SelectValue placeholder="Status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="in_progress">In Progress</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex flex-col">
-                  <label htmlFor="priority" className="text-gray-500 ml-6 mt-5">
-                    Priority
-                  </label>
-                  <Select onValueChange={(value) => setValue("priority", value)}>
-                    <SelectTrigger className="h-10 mt-3 ml-6 w-80 pl-5 rounded-md border-2 border-gray-400 text-gray-800">
-                      <SelectValue placeholder="Priority" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="low">Low</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="high">High</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <Textarea
+                  placeholder="Type your details here."
+                  {...register("findingsDetails")}
+                  className="w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <div>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                          !findingsDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon />
+                        {findingsDate ? (
+                          format(findingsDate, "PPP")
+                        ) : (
+                          <span>Created at</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={findingsDate}
+                        onSelect={setFindingsDate}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
+            </div>
 
-              {/* Chain of Custody */}
-              <div className="flex flex-col">
-                <label htmlFor="chainOfCustody" className="text-gray-500 ml-6 mt-5">
-                  Chain Of Custody
+            {/* Created At and Updated At */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label htmlFor="createdAt" className="text-gray-700 font-medium">
+                  Created At
                 </label>
-                <div className="flex flex-row">
-                  <Input
-                    type="text"
-                    placeholder="Name of receiver"
-                    {...register("chainOfCustodyReceivedBy")}
-                    className="w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400 text-gray-800"
-                  />
-                  <div className="flex ml-6 mt-5 border-2 border-gray-400 text-gray-800">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-[240px] text-[1.1rem] justify-start text-left font-normal",
-                            !chainOfCustodyDate && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon />
-                          {chainOfCustodyDate ? format(chainOfCustodyDate, "PPP") : <span>Case Receive on</span>}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={chainOfCustodyDate}
-                          onSelect={setChainOfCustodyDate}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                  <Input
-                    type="text"
-                    placeholder="Receive at"
-                    {...register("chainOfCustodyLocation")}
-                    className="w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400 text-gray-800"
-                  />
-                  <Input
-                    type="text"
-                    placeholder="Add any note"
-                    {...register("chainOfCustodyNotes")}
-                    className="w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400 text-gray-800"
-                  />
+                <div>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                          !createdAtDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon />
+                        {createdAtDate ? (
+                          format(createdAtDate, "PPP")
+                        ) : (
+                          <span>Created at</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={createdAtDate}
+                        onSelect={setCreatedAtDate}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
 
-              {/* Tools Used */}
-              <div className="flex flex-col">
-                <label htmlFor="toolsUsed" className="text-gray-500 ml-6 mt-5">
-                  Tools Used
+              <div className="space-y-2">
+                <label htmlFor="updatedAt" className="text-gray-700 font-medium">
+                  Updated At
                 </label>
-                <div className="flex flex-row">
-                  <Input
-                    type="text"
-                    placeholder="Name of Tool"
-                    {...register("toolsUsedName")}
-                    className="w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400 text-gray-800"
-                  />
-                  <Input
-                    type="text"
-                    placeholder="Version Used"
-                    {...register("toolsUsedVersion")}
-                    className="w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400 text-gray-800"
-                  />
-                  <Input
-                    type="text"
-                    placeholder="Add any note"
-                    {...register("toolsUsedNotes")}
-                    className="w-64 ml-6 mt-5 text-[1.1rem] border-2 border-gray-400 text-gray-800"
-                  />
+                <div>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full p-3 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                          !updatedAtDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon />
+                        {updatedAtDate ? (
+                          format(updatedAtDate, "PPP")
+                        ) : (
+                          <span>Updated At</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={updatedAtDate}
+                        onSelect={setUpdatedAtDate}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
+            </div>
 
-              {/* Findings */}
-              <div className="flex flex-col">
-                <label htmlFor="findings" className="text-gray-500 ml-6 mt-5">
-                  Findings
-                </label>
-                <div className="flex flex-row">
-                  <Textarea
-                    placeholder="Type your summary here."
-                    {...register("findingsSummary")}
-                    className="text-[1.1rem] border-2 border-gray-400 text-gray-800 h-10 mt-3 ml-6 w-80 pl-5 rounded-md"
-                  />
-                  <Textarea
-                    placeholder="Type your details here."
-                    {...register("findingsDetails")}
-                    className="text-[1.1rem] border-2 border-gray-400 text-gray-800 h-10 mt-3 ml-6 w-80 pl-5 rounded-md"
-                  />
-                  <div className="ml-10 mt-5">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-[240px] text-[1.1rem] justify-start text-left font-normal",
-                            !findingsDate && "text-muted-foreground border-2 border-gray-400 text-gray-800"
-                          )}
-                        >
-                          <CalendarIcon />
-                          {findingsDate ? format(findingsDate, "PPP") : <span>Created at</span>}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={findingsDate}
-                          onSelect={setFindingsDate}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
-              </div>
-
-              {/* Created At and Updated At */}
-              <div className="flex flex-row">
-                <div className="flex flex-col">
-                  <label htmlFor="createdAt" className="text-gray-500 ml-6 mt-5">
-                    Created At
-                  </label>
-                  <div className="ml-7 mt-5">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-[240px] text-[1.1rem] justify-start text-left font-normal",
-                            !createdAtDate && "text-muted-foreground border-2 border-gray-400 text-gray-800"
-                          )}
-                        >
-                          <CalendarIcon />
-                          {createdAtDate ? format(createdAtDate, "PPP") : <span>Created at</span>}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={createdAtDate}
-                          onSelect={setCreatedAtDate}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
-
-                <div className="flex flex-col">
-                  <label htmlFor="updatedAt" className="text-gray-500 ml-6 mt-5">
-                    Updated At
-                  </label>
-                  <div className="ml-7 mt-5">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-[240px] text-[1.1rem] justify-start text-left font-normal",
-                            !updatedAtDate && "text-muted-foreground border-2 border-gray-400 text-gray-800"
-                          )}
-                        >
-                          <CalendarIcon />
-                          {updatedAtDate ? format(updatedAtDate, "PPP") : <span>Updated At</span>}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={updatedAtDate}
-                          onSelect={setUpdatedAtDate}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
-              </div>
-
-              {/* Buttons */}
-              <div className="flex flex-row">
-                <button
-                  type="submit"
-                  className="btn dark:bg-[#001845] btn-active bg-[#00b4d8] text-white ml-6 text-[1.2rem] w-44 mt-10"
-                >
-                  Create Case
-                </button>
-              </div>
-            </form>
-          </CardContent>
-          <CardFooter></CardFooter>
-        </Card>
-        <SideDrawer/>
-      </div>
-    </>
+            {/* Buttons */}
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="bg-blue-500 text-white text-lg font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                Create Case
+              </button>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter></CardFooter>
+      </Card>
+    </div>
   );
 };
 

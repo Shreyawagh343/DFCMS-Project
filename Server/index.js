@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors"
 import UserRouter from "./Router/Userrouter.js"
 import CaseRouter from "./Router/CaseRouter.js"
+import QueryRouter from "./Router/QueryRoute.js"
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -33,6 +34,7 @@ try {
 
 app.use("/users",UserRouter);
 app.use("/cases",CaseRouter);
+app.use("/query",QueryRouter);
 
 app.listen(Port,()=>{
         console.log(`server is working ${Port}`)

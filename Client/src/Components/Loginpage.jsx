@@ -16,7 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const Loginpage = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
 
   const {
@@ -33,16 +33,12 @@ const Loginpage = () => {
         email,
         password,
       });
-      console.log("Response from backend:", res.data);
 
       if (res.data) {
-        // Store token and user info
         localStorage.setItem("authtoken", res.data.token);
         localStorage.setItem("users", JSON.stringify(res.data.user));
         toast.success("Successfully logged in!");
-
-        // Navigate to the redirect URL provided by the backend
-        navigate(res.data.redirectUrl || "/dashboard"); // Fallback to /dashboard if redirectUrl is missing
+        navigate(res.data.redirectUrl || "/dashboard");
       }
     } catch (err) {
       if (err.response) {
@@ -54,18 +50,18 @@ const Loginpage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r to-indigo-50">
-      <Tabs defaultValue="account" className="w-[400px]">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50 ">
+      <Tabs defaultValue="account" className="w-[500px] h-[70vh]">
         <TabsList className="grid w-full grid-cols-1">
           <TabsTrigger value="account">Login</TabsTrigger>
         </TabsList>
         <TabsContent value="account">
-          <Card className="shadow-lg">
+          <Card className="shadow-lg rounded-lg border border-gray-200">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold text-center">
+              <CardTitle className="text-3xl font-bold text-center text-gray-800">
                 Welcome Back!
               </CardTitle>
-              <CardDescription className="text-center">
+              <CardDescription className="text-center text-1xl text-gray-600">
                 Log in with your email to securely access your dashboard and
                 manage assigned cases.
               </CardDescription>
@@ -76,7 +72,7 @@ const Loginpage = () => {
                   <Input
                     type="email"
                     placeholder="Email"
-                    className="w-full"
+                    className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     {...register("email", {
                       required: { value: true, message: "This field is required" },
                       pattern: {
@@ -96,7 +92,7 @@ const Loginpage = () => {
                   <Input
                     type="password"
                     placeholder="Password"
-                    className="w-full"
+                    className="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     {...register("password", {
                       required: { value: true, message: "Password is required" },
                       minLength: {
@@ -112,11 +108,14 @@ const Loginpage = () => {
                   )}
                 </div>
 
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+                <Button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+                >
                   Login
                 </Button>
 
-                <p className="text-center text-sm text-gray-600">
+                <p className="text-center text-1xl text-gray-600">
                   Don't have an account?{" "}
                   <Link to="/signin" className="text-blue-600 hover:underline">
                     Sign up
@@ -131,4 +130,4 @@ const Loginpage = () => {
   );
 };
 
-export default Loginpage;
+export default LoginPage;

@@ -60,8 +60,8 @@ const Sign = () => {
       {/* Right Side: Form Section */}
       <div className="w-full md:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
-          <h1 className="text-3xl font-bold mb-6">Create Account</h1>
-          <p className="text-gray-600 mb-8">Get started with an account.</p>
+          <h1 className="text-4xl font-bold mb-2">Create Account</h1>
+          <p className="text-gray-600 text-1xl mb-8">Get started with an account.</p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Name Field */}
@@ -195,7 +195,7 @@ const Sign = () => {
             </button>
 
             {/* Login Link */}
-            <p className="text-center text-sm text-gray-600">
+            <p className="text-center text-[1.2rem] text-gray-600">
               Already have an account?{" "}
               <Link to="/loginhome" className="text-blue-600 hover:underline">
                 Login

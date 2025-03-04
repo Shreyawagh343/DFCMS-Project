@@ -16,20 +16,24 @@ import {
   Menu as MenuIcon,
   Assignment as CaseIcon,
   Folder as ClosedCasesIcon,
-  Settings as SettingsIcon,
   ExitToApp as LogoutIcon,
   ChevronLeft as CollapseIcon,
   ChevronRight as ExpandIcon,
-  GetApp as InstallIcon,
 } from "@mui/icons-material";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const drawerWidth = 240;
 
 const SideDrawer = () => {
+
+  const user = JSON.parse(localStorage.getItem("users"));
+  const officerCode = user?.officerCode;
+
   const theme = useTheme();
-  const [open, setOpen] = useState(true); // Sidebar open/closed state
-  const [selectedItem, setSelectedItem] = useState("Assigned Cases"); // Active menu item
+  const [open, setOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("Assigned Cases");
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -37,6 +41,12 @@ const SideDrawer = () => {
 
   const handleMenuItemClick = (item) => {
     setSelectedItem(item);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("users");
+    localStorage.removeItem("authtoken");
+    toast.success("Logged out successfully");
   };
 
   return (
@@ -48,8 +58,8 @@ const SideDrawer = () => {
         "& .MuiDrawer-paper": {
           width: open ? drawerWidth : theme.spacing(7),
           boxSizing: "border-box",
-          backgroundColor: "#f5f5f5", // Light background color
-          color: "#333", // Darker text color for contrast
+          backgroundColor: "#f9fafb",
+          color: "#4b5563",
           transition: theme.transitions.create("width", {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -57,83 +67,167 @@ const SideDrawer = () => {
         },
       }}
     >
-      <Toolbar>
+      <Toolbar className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
         <IconButton onClick={handleDrawerToggle} color="inherit">
           {open ? <CollapseIcon /> : <ExpandIcon />}
         </IconButton>
         {open && (
-          <Typography variant="h6" noWrap sx={{ fontSize: '1.25rem' }}> {/* Smaller text size */}
+          <Typography
+            variant="h6"
+            noWrap
+            sx={{
+              color: "black",
+              fontWeight: "bold",
+              flexGrow: 1,
+              textAlign: "center",
+            }}
+          >
             Dashboard
           </Typography>
         )}
       </Toolbar>
       <Divider />
 
-      {/* Menu Items */}
-      <List>
-        <ListItem
-          button
-          component={Link}
-          to="/AddCase"
-          onClick={() => handleMenuItemClick("Add Case")}
-          sx={{
-            backgroundColor:
-              selectedItem === "Add Case" ? theme.palette.action.selected : "transparent",
-            "&:hover": {
-              backgroundColor: theme.palette.action.hover,
-            },
-            borderRadius: 1,
-            margin: theme.spacing(0.5),
-          }}
-        >
-          <ListItemIcon sx={{ color: "inherit" }}><CaseIcon /></ListItemIcon>
-          {open && <ListItemText primary="Add Case" sx={{ fontSize: '0.875rem' }} />}
-        </ListItem>
-
-        <ListItem
-          button
-          component={Link}
-          to="/closed-cases"
-          onClick={() => handleMenuItemClick("Closed Cases")}
-          sx={{
-            backgroundColor:
-              selectedItem === "Closed Cases" ? theme.palette.action.selected : "transparent",
-            "&:hover": {
-              backgroundColor: theme.palette.action.hover,
-            },
-            borderRadius: 1,
-            margin: theme.spacing(0.5),
-          }}
-        >
-          <ListItemIcon sx={{ color: "inherit" }}><ClosedCasesIcon /></ListItemIcon>
-          {open && <ListItemText primary="Closed Cases" sx={{ fontSize: '0.875rem' }} />}
-        </ListItem>
-
-        {/* Add more ListItem components for other menu items as needed */}
-      </List>
-
-      {/* Logout Item at the Bottom */}
-      <Box sx={{ marginTop: 'auto' }}> {/* Pushes the logout item to the bottom */}
-        <Divider />
-        <List>
+      <List className="space-y-3 p-6">
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <ListItem
             button
             component={Link}
-            to="/logout"
-            onClick={() => handleMenuItemClick("Logout")}
+            to={`/officer/${officerCode}/dashboard`}
+            onClick={() => handleMenuItemClick("DashBoard")}
             sx={{
+              borderRadius: "8px",
               backgroundColor:
-                selectedItem === "Logout" ? theme.palette.action.selected : "transparent",
+                selectedItem === "DashBoard" ? "#e0f7fa" : "transparent",
               "&:hover": {
-                backgroundColor: theme.palette.action.hover,
+                backgroundColor: "#e0f7fa",
               },
-              borderRadius: 1,
-              margin: theme.spacing(0.5),
             }}
           >
-            <ListItemIcon sx={{ color: "inherit" }}><LogoutIcon /></ListItemIcon>
-            {open && <ListItemText primary="Logout" sx={{ fontSize: '0.875rem' }} />}
+            <ListItemIcon sx={{ color: "#3b82f6", minWidth: "40px" }}>
+              <ClosedCasesIcon />
+            </ListItemIcon>
+            {open && (
+              <ListItemText
+                primary="DashBoard"
+                sx={{ color: "#3b82f6", fontWeight: "medium" }}
+              />
+            )}
           </ListItem>
+        </motion.div>
+
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <ListItem
+            button
+            component={Link}
+            to="/AddCase"
+            onClick={() => handleMenuItemClick("Add Case")}
+            sx={{
+              borderRadius: "8px",
+              backgroundColor:
+                selectedItem === "Add Case" ? "#e0f7fa" : "transparent",
+              "&:hover": {
+                backgroundColor: "#e0f7fa",
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: "#3b82f6", minWidth: "40px" }}>
+              <CaseIcon />
+            </ListItemIcon>
+            {open && (
+              <ListItemText
+                primary="Add Case"
+                sx={{ color: "#3b82f6", fontWeight: "medium" }}
+              />
+            )}
+          </ListItem>
+        </motion.div>
+
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <ListItem
+            button
+            component={Link}
+            to={`/${officerCode}/Contact`}
+            onClick={() => handleMenuItemClick("Contact")}
+            sx={{
+              borderRadius: "8px",
+              backgroundColor:
+                selectedItem === "Contact" ? "#e0f7fa" : "transparent",
+              "&:hover": {
+                backgroundColor: "#e0f7fa",
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: "#3b82f6", minWidth: "40px" }}>
+              <ClosedCasesIcon />
+            </ListItemIcon>
+            {open && (
+              <ListItemText
+                primary="Contact"
+                sx={{ color: "#3b82f6", fontWeight: "medium" }}
+              />
+            )}
+          </ListItem>
+        </motion.div>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <ListItem
+            button
+            component={Link}
+            to="/loginhome"
+            onClick={() => handleMenuItemClick("Login")}
+            sx={{
+              borderRadius: "8px",
+              backgroundColor:
+                selectedItem === "Login" ? "#e0f7fa" : "transparent",
+              "&:hover": {
+                backgroundColor: "#e0f7fa",
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: "#3b82f6", minWidth: "40px" }}>
+              <ClosedCasesIcon />
+            </ListItemIcon>
+            {open && (
+              <ListItemText
+                primary="Login"
+                sx={{ color: "#3b82f6", fontWeight: "medium" }}
+              />
+            )}
+          </ListItem>
+        </motion.div>
+        
+      </List>
+
+      <Box sx={{ mt: "auto", p: 3 }}>
+        <Divider />
+        <List>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <ListItem
+              button
+              component={Link}
+              to="/signin"
+              onClick={() => handleLogout()}
+              sx={{
+                borderRadius: "8px",
+                color: "#ef4444",
+                backgroundColor:
+                  selectedItem === "Logout" ? "#fecaca" : "transparent",
+                "&:hover": {
+                  backgroundColor: "#fecaca",
+                },
+              }}
+            >
+              <ListItemIcon sx={{ color: "#ef4444", minWidth: "40px" }}>
+                <LogoutIcon />
+              </ListItemIcon>
+              {open && (
+                <ListItemText
+                  primary="Logout"
+                  sx={{ color: "#ef4444", fontWeight: "medium" }}
+                />
+              )}
+            </ListItem>
+          </motion.div>
         </List>
       </Box>
     </Drawer>
