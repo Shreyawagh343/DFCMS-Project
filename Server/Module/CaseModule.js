@@ -15,12 +15,7 @@ const caseSchema = new mongoose.Schema({
     enum: ['hard drive', 'smartphone', 'computer', 'cloud data', 'network logs', 'other'],
     required: true,
   },
-  status: {
-    type: String,
-    enum: ['pending', 'in_progress', 'completed'],
-    required: true,
-    default: 'in_progress',
-  },
+  status: { type: String, enum: ['active', 'closed', 'new'], default: 'new' },
   priority: {
     type: String,
     enum: ['low', 'medium', 'high'],

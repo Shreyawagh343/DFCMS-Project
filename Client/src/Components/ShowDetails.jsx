@@ -9,6 +9,7 @@ import {
   CircularProgress,
   Alert,
   Button,
+  Box,
 } from "@mui/material";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -53,14 +54,12 @@ const ShowDetails = () => {
   const handleDownloadPdf = () => {
     const input = reportRef.current;
 
-    // Force standard colors and ignore unsupported styles
     html2canvas(input, {
-      useCORS: true, // Enable cross-origin resource sharing
-      logging: true, // Enable logging for debugging
-      allowTaint: true, // Allow tainted canvases
-      backgroundColor: "#ffffff", // Force white background
+      useCORS: true,
+      logging: true,
+      allowTaint: true,
+      backgroundColor: "#ffffff",
       ignoreElements: (element) => {
-        // Ignore elements with unsupported styles
         return element.tagName === "STYLE" || element.tagName === "LINK";
       },
     })
@@ -112,8 +111,11 @@ const ShowDetails = () => {
           position: "absolute",
           top: 100,
           right: 50,
-          backgroundColor: "#1976d2", // Standard color
-          color: "#ffffff", // White text
+          backgroundColor: "#1976d2",
+          color: "#ffffff",
+          "&:hover": {
+            backgroundColor: "#1565c0",
+          },
         }}
       >
         Download PDF
@@ -126,109 +128,120 @@ const ShowDetails = () => {
           p: 4,
           pl: 10,
           pt: 5,
-          backgroundColor: "#ffffff", // Force white background
-          color: "#000000", // Force black text
+          backgroundColor: "#ffffff",
+          color: "#000000",
+          borderRadius: 2,
         }}
         ref={reportRef}
       >
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", color: "#000000" }}>
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", color: "#1976d2", mb: 4 }}>
           Case Details
         </Typography>
 
         {/* Basic Information */}
-        <Typography variant="h6" gutterBottom sx={{ pt: 3, color: "#000000" }}>
-          Basic Information
-        </Typography>
-        <Typography variant="body1" sx={{ color: "#000000" }}>
-          <strong>Title:</strong> {caseData.title}
-        </Typography>
-        <Typography variant="body1" sx={{ color: "#000000" }}>
-          <strong>Description:</strong> {caseData.description}
-        </Typography>
-        <Typography variant="body1" sx={{ color: "#000000" }}>
-          <strong>Evidence Type:</strong> {caseData.evidenceType}
-        </Typography>
-        <Typography variant="body1" sx={{ color: "#000000" }}>
-          <strong>Status:</strong> {caseData.status}
-        </Typography>
-        <Typography variant="body1" sx={{ color: "#000000" }}>
-          <strong>Priority:</strong> {caseData.priority}
-        </Typography>
-        <Divider sx={{ my: 2, backgroundColor: "#cccccc" }} />
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: "medium", color: "#1976d2", mb: 2 }}>
+            Basic Information
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+            <strong>Title:</strong> {caseData.title}
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+            <strong>Description:</strong> {caseData.description}
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+            <strong>Evidence Type:</strong> {caseData.evidenceType}
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+            <strong>Status:</strong> {caseData.status}
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+            <strong>Priority:</strong> {caseData.priority}
+          </Typography>
+        </Box>
+        <Divider sx={{ my: 4, backgroundColor: "#cccccc" }} />
 
         {/* Dates */}
-        <Typography variant="h6" gutterBottom sx={{ color: "#000000" }}>
-          Dates
-        </Typography>
-        <Typography variant="body1" sx={{ color: "#000000" }}>
-          <strong>Created At:</strong> {new Date(caseData.createdAt).toLocaleDateString()}
-        </Typography>
-        <Typography variant="body1" sx={{ color: "#000000" }}>
-          <strong>Updated At:</strong> {new Date(caseData.updatedAt).toLocaleDateString()}
-        </Typography>
-        <Divider sx={{ my: 2, backgroundColor: "#cccccc" }} />
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: "medium", color: "#1976d2", mb: 2 }}>
+            Dates
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+            <strong>Created At:</strong> {new Date(caseData.createdAt).toLocaleDateString()}
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+            <strong>Updated At:</strong> {new Date(caseData.updatedAt).toLocaleDateString()}
+          </Typography>
+        </Box>
+        <Divider sx={{ my: 4, backgroundColor: "#cccccc" }} />
 
         {/* Chain of Custody */}
-        <Typography variant="h6" gutterBottom sx={{ color: "#000000" }}>
-          Chain of Custody
-        </Typography>
-        {caseData.chainOfCustody.map((custody, index) => (
-          <div key={index}>
-            <Typography variant="body1" sx={{ color: "#000000" }}>
-              <strong>Received By:</strong> {custody.receivedBy}
-            </Typography>
-            <Typography variant="body1" sx={{ color: "#000000" }}>
-              <strong>Date Received:</strong> {new Date(custody.dateReceived).toLocaleDateString()}
-            </Typography>
-            <Typography variant="body1" sx={{ color: "#000000" }}>
-              <strong>Location:</strong> {custody.location}
-            </Typography>
-            <Typography variant="body1" sx={{ color: "#000000" }}>
-              <strong>Notes:</strong> {custody.notes}
-            </Typography>
-            <Divider sx={{ my: 2, backgroundColor: "#cccccc" }} />
-          </div>
-        ))}
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: "medium", color: "#1976d2", mb: 2 }}>
+            Chain of Custody
+          </Typography>
+          {caseData.chainOfCustody.map((custody, index) => (
+            <Box key={index} sx={{ mb: 3 }}>
+              <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+                <strong>Received By:</strong> {custody.receivedBy}
+              </Typography>
+              <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+                <strong>Date Received:</strong> {new Date(custody.dateReceived).toLocaleDateString()}
+              </Typography>
+              <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+                <strong>Location:</strong> {custody.location}
+              </Typography>
+              <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+                <strong>Notes:</strong> {custody.notes}
+              </Typography>
+              <Divider sx={{ my: 2, backgroundColor: "#cccccc" }} />
+            </Box>
+          ))}
+        </Box>
 
         {/* Tools Used */}
-        <Typography variant="h6" gutterBottom sx={{ color: "#000000" }}>
-          Tools Used
-        </Typography>
-        {caseData.toolsUsed.map((tool, index) => (
-          <div key={index}>
-            <Typography variant="body1" sx={{ color: "#000000" }}>
-              <strong>Tool Name:</strong> {tool.name}
-            </Typography>
-            <Typography variant="body1" sx={{ color: "#000000" }}>
-              <strong>Version:</strong> {tool.version}
-            </Typography>
-            <Typography variant="body1" sx={{ color: "#000000" }}>
-              <strong>Notes:</strong> {tool.notes}
-            </Typography>
-            <Divider sx={{ my: 2, backgroundColor: "#cccccc" }} />
-          </div>
-        ))}
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: "medium", color: "#1976d2", mb: 2 }}>
+            Tools Used
+          </Typography>
+          {caseData.toolsUsed.map((tool, index) => (
+            <Box key={index} sx={{ mb: 3 }}>
+              <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+                <strong>Tool Name:</strong> {tool.name}
+              </Typography>
+              <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+                <strong>Version:</strong> {tool.version}
+              </Typography>
+              <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+                <strong>Notes:</strong> {tool.notes}
+              </Typography>
+              <Divider sx={{ my: 2, backgroundColor: "#cccccc" }} />
+            </Box>
+          ))}
+        </Box>
 
         {/* Findings */}
-        <Typography variant="h6" gutterBottom sx={{ color: "#000000" }}>
-          Findings
-        </Typography>
-        {caseData.findings.map((finding, index) => (
-          <div key={index}>
-            <Typography variant="body1" sx={{ color: "#000000" }}>
-              <strong>Summary:</strong> {finding.summary}
-            </Typography>
-            <Typography variant="body1" sx={{ color: "#000000" }}>
-              <strong>Details:</strong> {finding.details}
-            </Typography>
-            <Typography variant="body1" sx={{ color: "#000000" }}>
-              <strong>Created At:</strong> {new Date(finding.createdAt).toLocaleDateString()}
-            </Typography>
-            <Typography variant="body1" sx={{ color: "#000000" }}>
-              <strong>Added By:</strong> {finding.addedBy}
-            </Typography>
-          </div>
-        ))}
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: "medium", color: "#1976d2", mb: 2 }}>
+            Findings
+          </Typography>
+          {caseData.findings.map((finding, index) => (
+            <Box key={index} sx={{ mb: 3 }}>
+              <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+                <strong>Summary:</strong> {finding.summary}
+              </Typography>
+              <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+                <strong>Details:</strong> {finding.details}
+              </Typography>
+              <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+                <strong>Created At:</strong> {new Date(finding.createdAt).toLocaleDateString()}
+              </Typography>
+              <Typography variant="body1" sx={{ color: "#333333", mb: 1 }}>
+                <strong>Added By:</strong> {finding.addedBy}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
       </Paper>
     </Container>
   );

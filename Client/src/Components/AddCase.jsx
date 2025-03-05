@@ -177,9 +177,9 @@ const AddCase = () => {
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="in_progress">In Progress</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="closed">Closed</SelectItem>
+                    <SelectItem value="new">New</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -319,7 +319,7 @@ const AddCase = () => {
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
                       <Calendar
-                        mode="single"
+                         mode="single"
                         selected={findingsDate}
                         onSelect={setFindingsDate}
                         initialFocus

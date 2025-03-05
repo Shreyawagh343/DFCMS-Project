@@ -4,7 +4,7 @@ import Home from './Pages/Home';
 import Sign from './Components/Sign';
 import ManageCasePage from './Pages/ManageCasePage';
 import AddCasePage from './Pages/AddCasePage';
-import AdminDashboard from "./Components/AdminDashboard";
+import AdminDashboard from "./Pages/AdminDashboard";
 import LoginPage from './Pages/LoginPage';
 import { Navigate } from 'react-router-dom';
 import OfficerDashboard from './Pages/OfficerDashboard';

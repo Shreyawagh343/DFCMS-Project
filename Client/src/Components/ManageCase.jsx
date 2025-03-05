@@ -19,36 +19,18 @@ import TableCase from './TableCase';
 
 const ManageCase = () => {
   const statuses = [
-    {
-      value: "Pending",
-      label: "Pending",
-      icon: HelpCircle,
-    },
-    {
-      value: "in progress",
-      label: "In Progress",
-      icon: ArrowUpCircle,
-    },
-    {
-      value: "Completed",
-      label: "Done",
-      icon: CheckCircle2,
-    },
-    {
-      value: "canceled",
-      label: "Canceled",
-      icon: XCircle,
-    },
+    { value: "Pending", label: "Pending", icon: HelpCircle },
+    { value: "in progress", label: "In Progress", icon: ArrowUpCircle },
+    { value: "Completed", label: "Done", icon: CheckCircle2 },
+    { value: "canceled", label: "Canceled", icon: XCircle },
   ];
 
   const [open, setOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="mt-12 mx-auto max-w-7xl px-6 py-8 dark:bg-gray-900 rounded-lg ">
-      <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 text-left">
-        Welcome Back!
-      </h1>
+    <div className="mt-8 mx-auto max-w-7xl px-6 py-8 dark:bg-gray-90 rounded-lg ">
       <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 text-left">
         Here's a list of your tasks for this month!
       </p>
@@ -57,6 +39,8 @@ const ManageCase = () => {
           type="text"
           placeholder="Search Case"
           className="input input-bordered flex-grow px-5 py-3 text-gray-800 dark:text-white dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
         <div className="flex items-center space-x-4">
           <p className="text-xl text-gray-700 dark:text-gray-300">Status</p>
@@ -109,7 +93,7 @@ const ManageCase = () => {
         </div>
       </div>
       <div className="mt-8">
-        <TableCase />
+        <TableCase searchQuery={searchQuery} selectedStatus={selectedStatus?.value} />
       </div>
     </div>
   );

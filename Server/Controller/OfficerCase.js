@@ -7,7 +7,7 @@ export const createCase = async (req, res) => {
       title,
       description,
       evidenceType,
-      status = "pending",
+      status = "new",
       priority = "medium",
       chainOfCustody = [],
       toolsUsed = [],
@@ -87,11 +87,8 @@ export const createCase = async (req, res) => {
       if (!getCase) {
         return res.status(404).json({ message: "Case not found" });
       }
-  
-      let redirectUrl = `/officer/${getCase.id}/dashboard`; // Default dashboard
       
-console.log("Redirect URL:", redirectUrl);
-      res.status(200).json({ message: "get the case", getCase,redirectUrl});
+      res.status(200).json({ message: "get the case", getCase});
     } catch (error) {
       console.log("Error deleting case:", error);
       res.status(500).json({ message: "Internal server error", error: error.message });
@@ -134,5 +131,33 @@ export const deleteCase = async (req, res) => {
     } catch (error) {
       console.log("Error updating case:", error);
       res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+  };
+
+  export const getOfficerCaseStatistics = async (req, res) => {
+    try {
+      const { officerCode } = req.params;
+      console.log("Officer Code from request:", officerCode);
+  
+      // Find the officer by their officerCode
+      const officer = await User.findOne({ officerCode });
+      if (!officer) {
+        return res.status(404).json({ message: "Officer not found" });
+      }
+  
+      // Count the number of cases based on their status and created by the officer
+      const activeCases = await Case.countDocuments({ status: 'active', createdBy: officer._id });
+      const closedCases = await Case.countDocuments({ status: 'closed', createdBy: officer._id });
+      const newCases = await Case.countDocuments({ status: 'new', createdBy: officer._id });
+  
+      res.status(200).json({
+        message: "Officer-specific case statistics retrieved successfully",
+        activeCases,
+        closedCases,
+        newCases,
+      });
+    } catch (error) {
+      console.error('Error fetching officer-specific case statistics:', error);
+      res.status(500).json({ message: 'Internal server error', error: error.message });
     }
   };

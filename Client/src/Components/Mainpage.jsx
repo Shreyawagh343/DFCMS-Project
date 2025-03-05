@@ -16,7 +16,7 @@ const Mainpage = () => {
         {/* Button */}
         <Link to="/signin">
           <button className="bg-blue-600 text-white text-lg font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-[#0096C7] transition duration-300">
-            Use Username and Password
+            Get Started
           </button>
         </Link>
       </div>
