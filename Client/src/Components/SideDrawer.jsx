@@ -11,7 +11,7 @@ import {
   Typography,
   useTheme,
   Box,
-  Avatar
+  Avatar,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -20,6 +20,11 @@ import {
   ExitToApp as LogoutIcon,
   ChevronLeft as CollapseIcon,
   ChevronRight as ExpandIcon,
+  Dashboard as DashboardIcon,
+  AddCircle as AddCaseIcon,
+  Help as HelpIcon,
+  ContactSupport as ContactIcon,
+  Login as LoginIcon,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -49,6 +54,35 @@ const SideDrawer = () => {
     toast.success("Logged out successfully");
   };
 
+  // Map menu items to their respective icons
+  const menuItems = [
+    {
+      name: "DashBoard",
+      icon: <DashboardIcon />,
+      path: `/officer/${officerCode}/dashboard`,
+    },
+    {
+      name: "Add Case",
+      icon: <AddCaseIcon />,
+      path: "/AddCase",
+    },
+    {
+      name: "Ask Query",
+      icon: <ContactIcon />,
+      path: `/${officerCode}/Contact`,
+    },
+    {
+      name: "Help",
+      icon: <HelpIcon />,
+      path: "/FaqQuestions",
+    },
+    {
+      name: "Login",
+      icon: <LoginIcon />,
+      path: "/loginhome",
+    },
+  ];
+
   return (
     <Drawer
       variant="permanent"
@@ -72,141 +106,66 @@ const SideDrawer = () => {
           {open ? <CollapseIcon /> : <ExpandIcon />}
         </IconButton>
         <Box display="flex" alignItems="center" gap={2}>
-            <Box>
-              {/* Welcome Message */}
-              <Typography
-                variant="subtitle1"
-                fontWeight="medium"
-                style={{  color: "white",paddingTop:"12px"}}
-              >
-                Welcome
-              </Typography>
-              {/* Officer Code */}
-              <Typography
-                variant="subtitle1"
-                fontWeight="medium"
-                style={{ color: "white"}}
-              >
-                {officerCode}
-              </Typography>
-            </Box>
-            {/* Avatar */}
-            <Avatar
-              style={{ marginTop: "1rem"}}
-              src="https://img.freepik.com/premium-vector/manager-icon_933463-4265.jpg?w=740"
-            />
+          <Box>
+            {/* Welcome Message */}
+            <Typography
+              variant="subtitle1"
+              fontWeight="medium"
+              style={{ color: "white", paddingTop: "12px" }}
+            >
+              Welcome
+            </Typography>
+            {/* Officer Code */}
+            <Typography
+              variant="subtitle1"
+              fontWeight="medium"
+              style={{ color: "white" }}
+            >
+              {officerCode}
+            </Typography>
           </Box>
+          {/* Avatar */}
+          <Avatar
+            style={{ marginTop: "1rem" }}
+            src="https://img.freepik.com/premium-vector/manager-icon_933463-4265.jpg?w=740"
+          />
+        </Box>
       </Toolbar>
       <Divider />
 
       <List className="space-y-3 p-3">
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <ListItem
-            button
-            component={Link}
-            to={`/officer/${officerCode}/dashboard`}
-            onClick={() => handleMenuItemClick("DashBoard")}
-            sx={{
-              borderRadius: "8px",
-              backgroundColor:
-                selectedItem === "DashBoard" ? "#e0f7fa" : "transparent",
-              "&:hover": {
-                backgroundColor: "#e0f7fa",
-              },
-            }}
+        {menuItems.map((item) => (
+          <motion.div
+            key={item.name}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <ListItemIcon sx={{ color: "#3b82f6", minWidth: "40px" }}>
-              <ClosedCasesIcon />
-            </ListItemIcon>
-            {open && (
-              <ListItemText
-                primary="DashBoard"
-                sx={{ color: "#3b82f6", fontWeight: "medium" }}
-              />
-            )}
-          </ListItem>
-        </motion.div>
-
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <ListItem
-            button
-            component={Link}
-            to="/AddCase"
-            onClick={() => handleMenuItemClick("Add Case")}
-            sx={{
-              borderRadius: "8px",
-              backgroundColor:
-                selectedItem === "Add Case" ? "#e0f7fa" : "transparent",
-              "&:hover": {
-                backgroundColor: "#e0f7fa",
-              },
-            }}
-          >
-            <ListItemIcon sx={{ color: "#3b82f6", minWidth: "40px" }}>
-              <CaseIcon />
-            </ListItemIcon>
-            {open && (
-              <ListItemText
-                primary="Add Case"
-                sx={{ color: "#3b82f6", fontWeight: "medium" }}
-              />
-            )}
-          </ListItem>
-        </motion.div>
-
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <ListItem
-            button
-            component={Link}
-            to={`/${officerCode}/Contact`}
-            onClick={() => handleMenuItemClick("Ask Query")}
-            sx={{
-              borderRadius: "8px",
-              backgroundColor:
-                selectedItem === "Ask Query" ? "#e0f7fa" : "transparent",
-              "&:hover": {
-                backgroundColor: "#e0f7fa",
-              },
-            }}
-          >
-            <ListItemIcon sx={{ color: "#3b82f6", minWidth: "40px" }}>
-              <ClosedCasesIcon />
-            </ListItemIcon>
-            {open && (
-              <ListItemText
-                primary="Ask Query"
-                sx={{ color: "#3b82f6", fontWeight: "medium" }}
-              />
-            )}
-          </ListItem>
-        </motion.div>
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <ListItem
-            button
-            component={Link}
-            to="/loginhome"
-            onClick={() => handleMenuItemClick("Login")}
-            sx={{
-              borderRadius: "8px",
-              backgroundColor:
-                selectedItem === "Login" ? "#e0f7fa" : "transparent",
-              "&:hover": {
-                backgroundColor: "#e0f7fa",
-              },
-            }}
-          >
-            <ListItemIcon sx={{ color: "#3b82f6", minWidth: "40px" }}>
-              <ClosedCasesIcon />
-            </ListItemIcon>
-            {open && (
-              <ListItemText
-                primary="Login"
-                sx={{ color: "#3b82f6", fontWeight: "medium" }}
-              />
-            )}
-          </ListItem>
-        </motion.div>
-        
+            <ListItem
+              button
+              component={Link}
+              to={item.path}
+              onClick={() => handleMenuItemClick(item.name)}
+              sx={{
+                borderRadius: "8px",
+                backgroundColor:
+                  selectedItem === item.name ? "#e0f7fa" : "transparent",
+                "&:hover": {
+                  backgroundColor: "#e0f7fa",
+                },
+              }}
+            >
+              <ListItemIcon sx={{ color: "#3b82f6", minWidth: "40px" }}>
+                {item.icon}
+              </ListItemIcon>
+              {open && (
+                <ListItemText
+                  primary={item.name}
+                  sx={{ color: "#3b82f6", fontWeight: "medium" }}
+                />
+              )}
+            </ListItem>
+          </motion.div>
+        ))}
       </List>
 
       <Box sx={{ mt: "auto" }}>

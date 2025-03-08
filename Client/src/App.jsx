@@ -11,6 +11,7 @@ import OfficerDashboard from './Pages/OfficerDashboard';
 import EditCase from './Components/EditCases';
 import SpecificCase from './Pages/SpecificCase';
 import Contpage from './Pages/ContPage';
+import FAQPage from './Pages/FAQPage';
 
 
 
@@ -68,6 +69,7 @@ function App() {
                 />
       <Route path="/dashboard/ManageCase" element={<ManageCasePage/>} />
       <Route path="/AddCase" element={<AddCasePage/>} />
+      <Route path="/FaqQuestions" element={<FAQPage/>} />
     </Routes>
     <Toaster />
     </div>

@@ -5,6 +5,7 @@ import cors from "cors"
 import UserRouter from "./Router/Userrouter.js"
 import CaseRouter from "./Router/CaseRouter.js"
 import QueryRouter from "./Router/QueryRoute.js"
+import FAQRoute from "./Router/FAQRoute.js";
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -35,6 +36,7 @@ try {
 app.use("/users",UserRouter);
 app.use("/cases",CaseRouter);
 app.use("/query",QueryRouter);
+app.use("/faq", FAQRoute);
 
 app.listen(Port,()=>{
         console.log(`server is working ${Port}`)
