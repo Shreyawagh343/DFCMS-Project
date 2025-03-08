@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import {
@@ -10,10 +10,10 @@ import {
   DialogDescription,
   DialogFooter,
   DialogClose,
-} from "./ui/dialog"; // Assuming you're using a UI library like shadcn/ui
-import { Input } from "./ui/input"; // Input component
-import { Button } from "./ui/button"; // Button component
-import { Select, SelectTrigger, SelectContent, SelectItem } from "./ui/select"; // Select component for enums
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { Select, SelectTrigger, SelectContent, SelectItem } from "./ui/select";
 import { useParams } from "react-router-dom";
 
 const EditCaseButton = () => {
@@ -33,9 +33,8 @@ const EditCaseButton = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isOpen, setIsOpen] = useState(false); // State to control modal visibility
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Fetch case details when the modal is opened
   const fetchCaseDetails = async () => {
     const token = localStorage.getItem("authtoken");
     setLoading(true);
@@ -49,7 +48,7 @@ const EditCaseButton = () => {
         }
       );
       if (response.status === 200) {
-        setFormData(response.data.getCase); // Set the fetched case data
+        setFormData(response.data.getCase);
       } else {
         setError("Failed to fetch case details.");
       }
@@ -61,7 +60,6 @@ const EditCaseButton = () => {
     }
   };
 
-  // Handle input changes
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
@@ -70,7 +68,6 @@ const EditCaseButton = () => {
     }));
   };
 
-  // Handle nested array changes (e.g., chainOfCustody, toolsUsed, findings)
   const handleNestedChange = (field, index, key, value) => {
     setFormData((prevData) => {
       const updatedArray = [...prevData[field]];
@@ -82,7 +79,6 @@ const EditCaseButton = () => {
     });
   };
 
-  // Add a new entry to a nested array
   const addNestedEntry = (field, template) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -90,7 +86,6 @@ const EditCaseButton = () => {
     }));
   };
 
-  // Remove an entry from a nested array
   const removeNestedEntry = (field, index) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -98,7 +93,6 @@ const EditCaseButton = () => {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem("authtoken");
@@ -113,7 +107,7 @@ const EditCaseButton = () => {
       );
       if (response.status === 200) {
         toast.success("Case updated successfully!");
-        setIsOpen(false); // Close the modal after successful submission
+        setIsOpen(false);
       } else {
         toast.error("Failed to update case.");
       }
@@ -128,52 +122,60 @@ const EditCaseButton = () => {
       <DialogTrigger asChild>
         <Button
           onClick={fetchCaseDetails}
-          className="text-[1.3rem] ml-[14rem] h-[3rem] bg-green-500 w-[15rem] mt-4"
+          className="text-lg font-semibold bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 ml-[15rem] w-[15vw] h-[3rem]"
         >
           Edit Case
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl h-[90vh] overflow-y-auto bg-white rounded-lg shadow-xl">
         <DialogHeader>
-          <DialogTitle className="text-[1.6rem]"> Edit Case</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-3xl font-bold text-gray-800">
+            Edit Case
+          </DialogTitle>
+          <DialogDescription className="text-lg text-gray-600">
             Make changes to the case details here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
         {loading ? (
-          <p>Loading...</p>
+          <p className="text-center text-gray-600">Loading...</p>
         ) : error ? (
-          <p>Error: {error}</p>
+          <p className="text-center text-red-600">Error: {error}</p>
         ) : (
-          <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+          <form onSubmit={handleSubmit} className="grid gap-6 py-4">
             {/* Basic Fields */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="title">Title</label>
+            <div className="grid grid-cols-4 items-center gap-6">
+              <label htmlFor="title" className="text-lg font-medium text-gray-700">
+                Title
+              </label>
               <Input
                 id="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="description">Description</label>
+            <div className="grid grid-cols-4 items-center gap-6">
+              <label htmlFor="description" className="text-lg font-medium text-gray-700">
+                Description
+              </label>
               <Input
                 id="description"
                 value={formData.description}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="evidenceType">Evidence Type</label>
+            <div className="grid grid-cols-4 items-center gap-6">
+              <label htmlFor="evidenceType" className="text-lg font-medium text-gray-700">
+                Evidence Type
+              </label>
               <Select
                 value={formData.evidenceType}
                 onValueChange={(value) =>
                   setFormData((prev) => ({ ...prev, evidenceType: value }))
                 }
               >
-                <SelectTrigger className="col-span-3">
+                <SelectTrigger className="col-span-3 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                   {formData.evidenceType || "Select evidence type"}
                 </SelectTrigger>
                 <SelectContent>
@@ -185,47 +187,51 @@ const EditCaseButton = () => {
                     "network logs",
                     "other",
                   ].map((type) => (
-                    <SelectItem key={type} value={type}>
+                    <SelectItem key={type} value={type} className="text-lg">
                       {type}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="status">Status</label>
+            <div className="grid grid-cols-4 items-center gap-6">
+              <label htmlFor="status" className="text-lg font-medium text-gray-700">
+                Status
+              </label>
               <Select
                 value={formData.status}
                 onValueChange={(value) =>
                   setFormData((prev) => ({ ...prev, status: value }))
                 }
               >
-                <SelectTrigger className="col-span-3">
+                <SelectTrigger className="col-span-3 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                   {formData.status || "Select status"}
                 </SelectTrigger>
                 <SelectContent>
-                  {["pending", "in_progress", "completed"].map((status) => (
-                    <SelectItem key={status} value={status}>
+                  {["active", "new", "closed"].map((status) => (
+                    <SelectItem key={status} value={status} className="text-lg">
                       {status}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="priority">Priority</label>
+            <div className="grid grid-cols-4 items-center gap-6">
+              <label htmlFor="priority" className="text-lg font-medium text-gray-700">
+                Priority
+              </label>
               <Select
                 value={formData.priority}
                 onValueChange={(value) =>
                   setFormData((prev) => ({ ...prev, priority: value }))
                 }
               >
-                <SelectTrigger className="col-span-3">
+                <SelectTrigger className="col-span-3 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                   {formData.priority || "Select priority"}
                 </SelectTrigger>
                 <SelectContent>
                   {["low", "medium", "high"].map((priority) => (
-                    <SelectItem key={priority} value={priority}>
+                    <SelectItem key={priority} value={priority} className="text-lg">
                       {priority}
                     </SelectItem>
                   ))}
@@ -234,11 +240,11 @@ const EditCaseButton = () => {
             </div>
 
             {/* Chain of Custody */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label>Chain of Custody</label>
+            <div className="grid grid-cols-4 items-center gap-6">
+              <label className="text-lg font-medium text-gray-700">Chain of Custody</label>
               <div className="col-span-3">
                 {formData.chainOfCustody.map((entry, index) => (
-                  <div key={index} className="mb-4">
+                  <div key={index} className="mb-6">
                     <Input
                       placeholder="Received By"
                       value={entry.receivedBy}
@@ -250,10 +256,11 @@ const EditCaseButton = () => {
                           e.target.value
                         )
                       }
+                      className="p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <Input
                       placeholder="Location"
-                      className="mt-2"
+                      className="mt-4 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       value={entry.location}
                       onChange={(e) =>
                         handleNestedChange(
@@ -266,7 +273,7 @@ const EditCaseButton = () => {
                     />
                     <Input
                       placeholder="Notes"
-                      className="mt-2"
+                      className="mt-4 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       value={entry.notes}
                       onChange={(e) =>
                         handleNestedChange(
@@ -278,16 +285,17 @@ const EditCaseButton = () => {
                       }
                     />
                     <Button
-                      type="button" 
-                      className="mt-4 w-28 bg-red-600 hover:bg-red-700"
+                      type="button"
+                      className="mt-4 w-28 bg-red-600 hover:bg-red-700 text-white text-lg font-semibold py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
                       onClick={() => removeNestedEntry("chainOfCustody", index)}
                     >
-                      Remove Entry
+                      Remove
                     </Button>
                   </div>
                 ))}
                 <Button
-                  type="button" className=" w-28 bg-green-600 hover:bg-green-700"
+                  type="button"
+                  className="w-28 bg-green-600 hover:bg-green-700 text-white text-lg font-semibold py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
                   onClick={() =>
                     addNestedEntry("chainOfCustody", {
                       receivedBy: "",
@@ -303,11 +311,11 @@ const EditCaseButton = () => {
             </div>
 
             {/* Tools Used */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label>Tools Used</label>
+            <div className="grid grid-cols-4 items-center gap-6">
+              <label className="text-lg font-medium text-gray-700">Tools Used</label>
               <div className="col-span-3">
                 {formData.toolsUsed.map((tool, index) => (
-                  <div key={index} className="mb-4">
+                  <div key={index} className="mb-6">
                     <Input
                       placeholder="Tool Name"
                       value={tool.name}
@@ -319,10 +327,11 @@ const EditCaseButton = () => {
                           e.target.value
                         )
                       }
+                      className="p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <Input
                       placeholder="Version"
-                      className="mt-2"
+                      className="mt-4 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       value={tool.version}
                       onChange={(e) =>
                         handleNestedChange(
@@ -335,7 +344,7 @@ const EditCaseButton = () => {
                     />
                     <Input
                       placeholder="Notes"
-                      className="mt-2"
+                      className="mt-4 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       value={tool.notes}
                       onChange={(e) =>
                         handleNestedChange(
@@ -348,15 +357,16 @@ const EditCaseButton = () => {
                     />
                     <Button
                       type="button"
-                      className="mt-4 w-28 bg-red-600 hover:bg-red-700"
+                      className="mt-4 w-28 bg-red-600 hover:bg-red-700 text-white text-lg font-semibold py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
                       onClick={() => removeNestedEntry("toolsUsed", index)}
                     >
-                     Remove Entry
+                      Remove
                     </Button>
                   </div>
                 ))}
                 <Button
-                  type="button"  className="w-28 bg-green-600 hover:bg-green-700"
+                  type="button"
+                  className="w-28 bg-green-600 hover:bg-green-700 text-white text-lg font-semibold py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
                   onClick={() =>
                     addNestedEntry("toolsUsed", {
                       name: "",
@@ -371,11 +381,11 @@ const EditCaseButton = () => {
             </div>
 
             {/* Findings */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label>Findings</label>
+            <div className="grid grid-cols-4 items-center gap-6">
+              <label className="text-lg font-medium text-gray-700">Findings</label>
               <div className="col-span-3">
                 {formData.findings.map((finding, index) => (
-                  <div key={index} className="mb-4">
+                  <div key={index} className="mb-6">
                     <Input
                       placeholder="Summary"
                       value={finding.summary}
@@ -387,10 +397,11 @@ const EditCaseButton = () => {
                           e.target.value
                         )
                       }
+                      className="p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <Input
                       placeholder="Details"
-                      className="mt-2"
+                      className="mt-4 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       value={finding.details}
                       onChange={(e) =>
                         handleNestedChange(
@@ -403,15 +414,16 @@ const EditCaseButton = () => {
                     />
                     <Button
                       type="button"
-                      className="mt-4 w-28 bg-red-600 hover:bg-red-700"
+                      className="mt-4 w-28 bg-red-600 hover:bg-red-700 text-white text-lg font-semibold py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
                       onClick={() => removeNestedEntry("findings", index)}
                     >
-                     Remove Entry
+                      Remove
                     </Button>
                   </div>
                 ))}
                 <Button
-                  type="button"  className="w-28 bg-green-600 hover:bg-green-700"
+                  type="button"
+                  className="w-28 bg-green-600 hover:bg-green-700 text-white text-lg font-semibold py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
                   onClick={() =>
                     addNestedEntry("findings", {
                       summary: "",
@@ -427,32 +439,34 @@ const EditCaseButton = () => {
             </div>
 
             {/* Created By */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="createdBy">Created By</label>
+            <div className="grid grid-cols-4 items-center gap-6">
+              <label htmlFor="createdBy" className="text-lg font-medium text-gray-700">
+                Created By
+              </label>
               <Input
                 id="createdBy"
                 value={formData.createdBy}
-                readOnly // Make this field read-only
-                className="col-span-3"
+                readOnly
+                className="col-span-3 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             {/* Created At */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label>Created At</label>
+            <div className="grid grid-cols-4 items-center gap-6">
+              <label className="text-lg font-medium text-gray-700">Created At</label>
               <Input
                 type="text"
                 value={new Date(formData.createdAt).toLocaleString()}
-                readOnly // Make this field read-only
-                className="col-span-3"
+                readOnly
+                className="col-span-3 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             {/* Updated At */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label>Updated At</label>
+            <div className="grid grid-cols-4 items-center gap-6">
+              <label className="text-lg font-medium text-gray-700">Updated At</label>
               <Input
-                type="datetime-local" // Use datetime-local for editable date and time
+                type="datetime-local"
                 value={
                   formData.updatedAt
                     ? new Date(formData.updatedAt).toISOString().slice(0, 16)
@@ -462,16 +476,21 @@ const EditCaseButton = () => {
                   const newDate = new Date(e.target.value);
                   setFormData((prevData) => ({
                     ...prevData,
-                    updatedAt: newDate,  
+                    updatedAt: newDate,
                   }));
                 }}
-                className="col-span-3"
+                className="col-span-3 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button type="submit" className="bg-blue-500 hover:bg-blue-600">Save changes</Button>
+                <Button
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
+                >
+                  Save Changes
+                </Button>
               </DialogClose>
             </DialogFooter>
           </form>

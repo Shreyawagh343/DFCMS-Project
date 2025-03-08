@@ -1,0 +1,102 @@
+import React, { useState } from 'react';
+import { ArrowUpCircle, CheckCircle2, HelpCircle, XCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import AdminTableCase from './AdminTableCase';
+
+
+const AdminmanageCase= () => {
+  const statuses = [
+    { value: "new", label: "new", icon: HelpCircle },
+    { value: "active", label: "active", icon: ArrowUpCircle },
+    { value: "closed", label: "closed", icon: CheckCircle2 }
+  ];
+
+  const [open, setOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  return (
+    <div className="mt-8 mx-auto max-w-7xl px-6 py-8 dark:bg-gray-90 rounded-lg ">
+      <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 text-left">
+        Here's a list of your tasks for this month!
+      </p>
+      <div className="flex items-center space-x-4">
+        <input
+          type="text"
+          placeholder="Search Case"
+          className="input input-bordered flex-grow px-5 py-3 text-gray-800 dark:text-white dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <div className="flex items-center space-x-4">
+          <p className="text-xl text-gray-700 dark:text-gray-300">Status</p>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-56 h-12 justify-start text-gray-800 dark:text-white dark:border-gray-600 rounded-full"
+              >
+                {selectedStatus ? (
+                  <>
+                    <selectedStatus.icon className="mr-2 h-5 w-5 shrink-0" />
+                    {selectedStatus.label}
+                  </>
+                ) : (
+                  <>+ Set status</>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="p-0" side="right" align="start">
+              <Command>
+                <CommandInput placeholder="Search status..." />
+                <CommandList>
+                  <CommandEmpty>No results found.</CommandEmpty>
+                  <CommandGroup>
+                    {statuses.map((status) => (
+                      <CommandItem
+                        key={status.value}
+                        value={status.value}
+                        onSelect={(value) => {
+                          setSelectedStatus(statuses.find((s) => s.value === value) || null);
+                          setOpen(false);
+                        }}
+                      >
+                        <status.icon
+                          className={cn(
+                            "mr-2 h-5 w-5",
+                            status.value === selectedStatus?.value ? "opacity-100" : "opacity-40"
+                          )}
+                        />
+                        <span>{status.label}</span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+        </div>
+      </div>
+      <div className="mt-8">
+        <AdminTableCase searchQuery={searchQuery} selectedStatus={selectedStatus?.value}  />
+      </div>
+    </div>
+  );
+};
+
+export default AdminmanageCase;

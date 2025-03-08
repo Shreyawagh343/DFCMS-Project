@@ -4,7 +4,6 @@ import Home from './Pages/Home';
 import Sign from './Components/Sign';
 import ManageCasePage from './Pages/ManageCasePage';
 import AddCasePage from './Pages/AddCasePage';
-import AdminDashboard from "./Pages/AdminDashboard";
 import LoginPage from './Pages/LoginPage';
 import { Navigate } from 'react-router-dom';
 import OfficerDashboard from './Pages/OfficerDashboard';
@@ -12,6 +11,8 @@ import EditCase from './Components/EditCases';
 import SpecificCase from './Pages/SpecificCase';
 import Contpage from './Pages/ContPage';
 import FAQPage from './Pages/FAQPage';
+import AdminDashboardPage from './Pages/AdminDashboardPage';
+import AdminFAQpage from './Pages/AdminFAQpage';
 
 
 
@@ -58,10 +59,10 @@ function App() {
                     }
                 />
       <Route
-                    path="/dashboard"
+                    path="/admin/dashboard"
                     element={
                         isAuthenticated ? (
-                            <AdminDashboard/>
+                            <AdminDashboardPage/>
                         ) : (
                             <Navigate to="/loginhome" />
                         )
@@ -70,6 +71,7 @@ function App() {
       <Route path="/dashboard/ManageCase" element={<ManageCasePage/>} />
       <Route path="/AddCase" element={<AddCasePage/>} />
       <Route path="/FaqQuestions" element={<FAQPage/>} />
+      <Route path="/AdminFaqQuestions" element={<AdminFAQpage/>} />
     </Routes>
     <Toaster />
     </div>

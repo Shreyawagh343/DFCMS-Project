@@ -113,6 +113,35 @@ export const deleteCase = async (req, res) => {
     }
   };
 
+export const getAllCases = async (req, res) => {
+    try {
+      const AllCase = await Case.find();
+    res.status(200).json({
+      AllCase,
+    });
+  } catch (error) {
+    console.error("Error fetching cases:", error);
+    res.status(500).json({ message: "Failed to fetch cases.", error });
+  }
+};
+
+export const getAllStatus = async (req, res) => {
+  try {
+    const activeCases = await Case.countDocuments({ status: "active" });
+    const closedCases = await Case.countDocuments({ status: "closed" });
+    const newCases = await Case.countDocuments({ status: "new" });
+
+    res.status(200).json({
+      activeCases,
+      closedCases,
+      newCases,
+    });
+  } catch (error) {
+    console.error("Error fetching cases:", error);
+    res.status(500).json({ message: "Failed to fetch cases.", error });
+  }
+};
+
   export const updateCase = async (req, res) => {
     try {
       const { caseId } = req.params;
