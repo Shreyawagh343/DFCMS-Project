@@ -108,7 +108,7 @@ const AddCase = () => {
   };
 
   return (
-    <div className="mt-10 mx-auto max-w-[70vw] p-6 bg-white shadow-lg rounded-lg">
+    <div className="mt-10 mx-auto max-w-[70vw] p-6 bg-white">
       <Card>
         <CardHeader>
           <CardTitle className="text-3xl font-bold text-center text-gray-800">
