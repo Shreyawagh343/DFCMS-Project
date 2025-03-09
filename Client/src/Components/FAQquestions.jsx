@@ -39,52 +39,50 @@ const FAQquestions = () => {
   }, {});
 
   return (
-    <Container>
-      {/* Header Section */}
-      <Typography
-        variant="h4"
-        gutterBottom
-        sx={{ mt: 4, mb: 2, textAlign: "center" }}
-      >
-        Do You Have Questions?
-      </Typography>
-      <Typography variant="body1" sx={{ mb: 4, textAlign: "center" }}>
-        We have answers (well, most of the time!) Find answers to the most common
-        questions you may have about the Digital Forensics Case Management System.
-        If you still can’t find the answer you’re looking for, just Contact Us!
-      </Typography>
+    <div className="min-h-screen p-8">
+      <Container>
+        {/* Header Section */}
+        <Typography variant="h4" gutterBottom sx={{ mt: 4, mb: 2, textAlign: 'center' }}>
+          Do You Have Questions?
+        </Typography>
+        <Typography variant="body1" sx={{ mb: 4, textAlign: 'center' }}>
+          We have answers (well, most of the time!) Find answers to the most common questions you
+          may have about the Digital Forensics Case Management System. If you still can’t find the
+          answer you’re looking for, just Contact Us!
+        </Typography>
 
-      {/* Search Bar */}
-      <TextField
-        fullWidth
-        variant="outlined"
-        placeholder="Search FAQs..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        sx={{ mb: 4 }}
-      />
+        {/* Search Bar */}
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Search FAQs..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{ mb: 4 }}
+        />
 
-      {/* Grouped FAQs by Category */}
-      {Object.keys(filteredFAQs).map((category) => (
-        <div key={category}>
-          <Typography variant="h5" sx={{ fontWeight: "bold", mt: 4, mb: 2 }}>
-            {category} FAQs
-          </Typography>
-          {filteredFAQs[category].map((faq) => (
-            <Accordion key={faq._id}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  {faq.question}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{faq.answer}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
-        </div>
-      ))}
-    </Container>
+        {/* Grouped FAQs by Category */}
+        {Object.keys(filteredFAQs).map((category) => (
+          <div key={category}>
+            <Typography variant="h5" sx={{ fontWeight: 'bold', mt: 4, mb: 2 }}>
+              {category} FAQs
+            </Typography>
+            {filteredFAQs[category].map((faq) => (
+              <Accordion key={faq._id}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    {faq.question}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>{faq.answer}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </div>
+        ))}
+      </Container>
+    </div>
   );
 };
 
