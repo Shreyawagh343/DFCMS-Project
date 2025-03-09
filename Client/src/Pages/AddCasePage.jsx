@@ -6,7 +6,7 @@ import React from 'react'
 const AddCasePage = () => {
   return (
     <>
-    <div className="w-[100vw] h-[180vh]">
+    <div className="w-full h-[180vh]">
     <OfficersCases/>
      <AddCase/>
     </div>
