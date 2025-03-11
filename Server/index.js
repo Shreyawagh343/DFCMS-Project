@@ -8,6 +8,7 @@ import QueryRouter from "./Router/QueryRoute.js"
 import FAQRoute from "./Router/FAQRoute.js";
 import cookieParser from 'cookie-parser';
 
+
 dotenv.config();
 const app = express();
 app.use(express.json());

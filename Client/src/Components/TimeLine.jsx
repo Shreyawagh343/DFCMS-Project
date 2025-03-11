@@ -55,22 +55,22 @@ const TimeLine = () => {
       </Typography>
       <VerticalTimeline>
       <Grid container spacing={3}>
-        {latestEvents.map((event, index) => (
-          <Grid item xs={12} md={6} key={index}>
-            <Paper
-              sx={{
-                p: 1,
-                borderRadius: '12px',
-                width:'20vw',
-                height:"15vh",
-                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-                transition: 'transform 0.3s, box-shadow 0.3s',
-                '&:hover': {
-                  transform: 'translateY(-5px)',
-                  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
-                },
-              }}
-            >
+          {latestEvents.map((event, index) => (
+            <Grid item xs={12} md={6} key={index}>
+              <Paper
+                sx={{
+                  p: 2,
+                  borderRadius: '12px',
+                  width: '100%',
+                  maxHeight: '30vh', // Set a maximum height
+                  overflowY: 'auto', // Enable vertical scrolling
+                  
+                  transition: 'transform 0.3s, box-shadow 0.3s',
+                  '&:hover': {
+                    transform: 'translateY(-5px)',
+                    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+                  },
+                }}>
               <Typography variant="subtitle1" fontWeight="bold" color="primary">
                 {event.title}
               </Typography>

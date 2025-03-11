@@ -2,8 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast from 'react-hot-toast';
 
 import {
   Card,
@@ -42,7 +41,7 @@ const LoginPage = () => {
       }
     } catch (err) {
       if (err.response) {
-        toast.error("Error: " + err.response.data.message);
+        toast.success("Error: " + err.response.data.message);
       } else {
         toast.error("Network error. Please try again.");
       }

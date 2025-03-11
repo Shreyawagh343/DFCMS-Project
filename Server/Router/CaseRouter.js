@@ -10,7 +10,7 @@ router.get("/officer/:officerCode", authenticateUser, getOfficerCases);
 router.get("/:caseId", authenticateUser,getTaskDetails);
 router.post("/CreateCase",authenticateUser , createCase);
 router.delete("/:caseId", authenticateUser ,deleteCase );
-router.put("/:caseId", authenticateUser ,updateCase);
+router.put("/:caseId", authenticateUser , updateCase);
 router.get('/:officerCode/statistics',authenticateUser, getOfficerCaseStatistics); 
  
 export default router;
